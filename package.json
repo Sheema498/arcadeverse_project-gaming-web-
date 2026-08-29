@@ -1,0 +1,28 @@
+{
+  "name": "arcadeverse",
+  "version": "1.0.0",
+  "description": "Seeded retro-gaming platform with 2D ECS engine and synthesized chiptune music.",
+  "main": "assets/js/main.js",
+  "scripts": {
+    "start": "vite --port 5173 --host",
+    "build": "vite build",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "keywords": [
+    "gaming",
+    "arcade",
+    "procedural",
+    "canvas",
+    "ecs"
+  ],
+  "author": "Antigravity Team",
+  "license": "MIT",
+  "dependencies": {
+    "vite": "^4.4.9"
+  },
+  "devDependencies": {
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2"
+  }
+}
