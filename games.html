@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcadeVerse Games Room - Play Free Browser Games</title>
+    <link rel="stylesheet" href="assets/css/core.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/games.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <span class="brand-glow">ARCADE</span><span class="brand-alt">VERSE</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="games.html" class="nav-link active">Games Room</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboards</a>
+                <a href="profile.html" class="nav-link">Player Profile</a>
+                <a href="docs.html" class="nav-link">Engine Docs</a>
+                <div class="theme-selector">
+                    <button class="theme-btn" id="themeBtn" aria-label="Switch Theme">
+                        <span class="theme-icon">⚡</span>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <button class="theme-opt" data-theme="cyberpunk">Cyberpunk</button>
+                        <button class="theme-opt" data-theme="retro">Retro Terminal</button>
+                        <button class="theme-opt" data-theme="synthwave">Synthwave</button>
+                        <button class="theme-opt" data-theme="dark">Midnight Dark</button>
+                        <button class="theme-opt" data-theme="light">Arcade Light</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Games Portal Frame -->
+    <main class="games-container">
+        <div class="games-layout">
+            <!-- Sidebar: Game list switcher -->
+            <aside class="games-sidebar">
+                <h3 class="sidebar-title">Games Selector</h3>
+                <ul class="games-selector-list" id="gamesSelectorList">
+                    <li class="selector-item" data-game="platformer">
+                        <span class="selector-icon">🛡️</span>
+                        <div class="selector-details">
+                            <span class="selector-name">Retro Knight</span>
+                            <span class="selector-type">Platformer</span>
+                        </div>
+                    </li>
+                    <li class="selector-item" data-game="tower_defense">
+                        <span class="selector-icon">📡</span>
+                        <div class="selector-details">
+                            <span class="selector-name">Neo-Defender</span>
+                            <span class="selector-type">Strategy</span>
+                        </div>
+                    </li>
+                    <li class="selector-item" data-game="space_shooter">
+                        <span class="selector-icon">🚀</span>
+                        <div class="selector-details">
+                            <span class="selector-name">Cosmic Void</span>
+                            <span class="selector-type">Shoot 'Em Up</span>
+                        </div>
+                    </li>
+                    <li class="selector-item" data-game="rpg">
+                        <span class="selector-icon">🗺️</span>
+                        <div class="selector-details">
+                            <span class="selector-name">Dungeon Quest</span>
+                            <span class="selector-type">Action RPG</span>
+                        </div>
+                    </li>
+                    <li class="selector-item" data-game="racer">
+                        <span class="selector-icon">🏎️</span>
+                        <div class="selector-details">
+                            <span class="selector-name">Synth Racer</span>
+                            <span class="selector-type">Pseudo-3D Racer</span>
+                        </div>
+                    </li>
+                    <li class="selector-item" data-game="puzzle">
+                        <span class="selector-icon">🧱</span>
+                        <div class="selector-details">
+                            <span class="selector-name">Block Cascade</span>
+                            <span class="selector-type">Tetris Puzzle</span>
+                        </div>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- Main Play Area -->
+            <section class="game-main-panel">
+                <div class="game-header-bar">
+                    <div class="active-game-meta">
+                        <span class="game-badge" id="activeGameGenre">Platformer</span>
+                        <h2 id="activeGameTitle">Retro Knight</h2>
+                    </div>
+                    <div class="game-action-controls">
+                        <button class="btn btn-sm btn-secondary" id="btnRestartGame">🔄 Restart</button>
+                        <button class="btn btn-sm btn-secondary" id="btnPauseGame">⏸️ Pause</button>
+                        <button class="btn btn-sm btn-secondary" id="btnMuteGame">🔊 Mute</button>
+                    </div>
+                </div>
+
+                <!-- Canvas Wrapper -->
+                <div class="canvas-wrapper">
+                    <canvas id="gameCanvas" width="800" height="600"></canvas>
+                    
+                    <!-- Overlay Screen for Start/Pause/Game Over -->
+                    <div class="canvas-overlay" id="canvasOverlay">
+                        <div class="overlay-content" id="overlayContent">
+                            <h2 class="overlay-title" id="overlayTitle">RETRO KNIGHT</h2>
+                            <p class="overlay-desc" id="overlayDesc">Press Start to enter the level.</p>
+                            <button class="btn btn-primary btn-lg btn-glow" id="btnStartGame">START GAME</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Info/Controls Guide -->
+                <div class="game-footer-details card">
+                    <div class="card-body">
+                        <div class="instructions-tabs">
+                            <button class="tab-btn active" data-tab="howToPlay">How to Play</button>
+                            <button class="tab-btn" data-tab="controls">Controls</button>
+                            <button class="tab-btn" data-tab="lore">Lore & Story</button>
+                        </div>
+                        <div class="tab-content-container">
+                            <div class="tab-content active" id="tabContent-howToPlay">
+                                <p id="gameHowToPlay">Navigate through platforms, jump over spike hazards, and defeat slime guards to retrieve the golden emblem at the end of the level.</p>
+                            </div>
+                            <div class="tab-content" id="tabContent-controls">
+                                <div class="controls-grid" id="gameControlsGrid">
+                                    <div class="control-key-row"><span class="key-cap">A</span> / <span class="key-cap">D</span> or <span class="key-cap">←</span> / <span class="key-cap">→</span> <span>Move Left / Right</span></div>
+                                    <div class="control-key-row"><span class="key-cap">Space</span> / <span class="key-cap">W</span> <span>Jump (Double Jump unlocked via scrolls)</span></div>
+                                    <div class="control-key-row"><span class="key-cap">Shift</span> <span>Dash (when gauge is full)</span></div>
+                                    <div class="control-key-row"><span class="key-cap">J</span> <span>Attack / Cast Magic</span></div>
+                                </div>
+                            </div>
+                            <div class="tab-content" id="tabContent-lore">
+                                <p id="gameLore">Sir Galen must descend into the Pixel Caves of Antigravity to retrieve the long lost Golden Code fragments before the corruption dissolves the virtual realm.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 ArcadeVerse. Built fully client-side on custom Web Canvas & Audio engines.</p>
+            <div class="footer-links">
+                <a href="docs.html">Architecture Documentation</a>
+                <span class="separator">|</span>
+                <a href="profile.html">Achievements Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Engine Scripts -->
+    <!-- Modular Level Databases -->
+    <script src="assets/js/games/levels/level_1.js"></script>
+    <script src="assets/js/games/levels/level_2.js"></script>
+    <script src="assets/js/games/levels/level_3.js"></script>
+    <script src="assets/js/games/levels/level_4.js"></script>
+    <script src="assets/js/games/levels/level_5.js"></script>
+    <script src="assets/js/games/levels/level_6.js"></script>
+    <script src="assets/js/games/levels/level_7.js"></script>
+    <script src="assets/js/games/levels/level_8.js"></script>
+    <script src="assets/js/games/levels/level_9.js"></script>
+    <script src="assets/js/games/levels/level_10.js"></script>
+
+    <!-- Modular RPG Databases -->
+    <script src="assets/js/games/rpg_db/quests_1.js"></script>
+    <script src="assets/js/games/rpg_db/quests_2.js"></script>
+    <script src="assets/js/games/rpg_db/quests_3.js"></script>
+    <script src="assets/js/games/rpg_db/quests_4.js"></script>
+
+    <!-- Modular Sprite Databases -->
+    <script src="assets/js/games/sprites/sprites_knight_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_knight_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_slime_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_skeleton_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_dragon_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_bronze.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_silver.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_mythic.js"></script>
+    <script src="assets/js/games/sprites/sprites_shield_gold.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_player.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_scout.js"></script>
+
+    <script src="assets/js/core/storage.js"></script>
+    <script src="assets/js/core/sound.js"></script>
+    <script src="assets/js/core/engine.js"></script>
+    
+    <!-- Games Implementation Scripts -->
+    <script src="assets/js/games/platformer.js"></script>
+    <script src="assets/js/games/tower_defense.js"></script>
+    <script src="assets/js/games/space_shooter.js"></script>
+    <script src="assets/js/games/rpg.js"></script>
+    <script src="assets/js/games/racer.js"></script>
+    <script src="assets/js/games/puzzle.js"></script>
+    
+    <!-- App Controller -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

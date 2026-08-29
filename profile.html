@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcadeVerse Player Profile & Achievements</title>
+    <link rel="stylesheet" href="assets/css/core.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <span class="brand-glow">ARCADE</span><span class="brand-alt">VERSE</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="games.html" class="nav-link">Games Room</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboards</a>
+                <a href="profile.html" class="nav-link active">Player Profile</a>
+                <a href="docs.html" class="nav-link">Engine Docs</a>
+                <div class="theme-selector">
+                    <button class="theme-btn" id="themeBtn" aria-label="Switch Theme">
+                        <span class="theme-icon">⚡</span>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <button class="theme-opt" data-theme="cyberpunk">Cyberpunk</button>
+                        <button class="theme-opt" data-theme="retro">Retro Terminal</button>
+                        <button class="theme-opt" data-theme="synthwave">Synthwave</button>
+                        <button class="theme-opt" data-theme="dark">Midnight Dark</button>
+                        <button class="theme-opt" data-theme="light">Arcade Light</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Management Page -->
+    <main class="dashboard-container">
+        <div class="section-title-row">
+            <h2>Player Command Center</h2>
+            <p>Customize your identity and review achievements earned across games.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Left Side: Profile Editing Form and Avatar Generator -->
+            <section class="dash-sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Identity Settings</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="profileForm" onsubmit="event.preventDefault();">
+                            <div class="form-group">
+                                <label for="inputUsername">Gamer Tag</label>
+                                <input type="text" id="inputUsername" class="form-input" value="PlayerOne" maxlength="15">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Procedural Avatar Seed</label>
+                                <div class="avatar-generator-box">
+                                    <canvas id="editorAvatarCanvas" width="128" height="128"></canvas>
+                                    <div class="avatar-controls">
+                                        <button type="button" class="btn btn-sm btn-secondary" id="btnRandomizeAvatar">🎲 Randomize</button>
+                                        <button type="button" class="btn btn-sm btn-secondary" id="btnCycleAvatarColor">🎨 Color Theme</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn btn-primary btn-block" id="btnSaveProfile">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Stats summary Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Game Console Statistics</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="stat-list">
+                            <div class="stat-row"><span>Total Playtime</span> <b id="statPlayTime">0m</b></div>
+                            <div class="stat-row"><span>Total Score Accumulated</span> <b id="statCumulativeScore">0</b></div>
+                            <div class="stat-row"><span>Platformer High Score</span> <b id="statPlatformerScore">0</b></div>
+                            <div class="stat-row"><span>Tower Defense Waves Held</span> <b id="statTowerWaves">0</b></div>
+                            <div class="stat-row"><span>Bosses Defeated</span> <b id="statBossesDefeated">0</b></div>
+                            <div class="stat-row"><span>Racer Lap Time (Best)</span> <b id="statBestLap">--s</b></div>
+                            <div class="stat-row"><span>Puzzle Lines Cleared</span> <b id="statPuzzleLines">0</b></div>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-block btn-sm" id="btnResetData" style="margin-top: 1rem; border-color: var(--color-error); color: var(--color-error);">⚠️ Reset Local Profile Data</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Side: Extensive Achievements List -->
+            <section class="dash-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Trophy Room & Achievements</h3>
+                        <span class="badge" id="achievementProgressText">0 / 48 Unlocked</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="achievements-filter-bar">
+                            <button class="filter-btn active" data-filter="all">All Games</button>
+                            <button class="filter-btn" data-filter="platformer">Retro Knight</button>
+                            <button class="filter-btn" data-filter="tower_defense">Neo-Defender</button>
+                            <button class="filter-btn" data-filter="space_shooter">Cosmic Void</button>
+                            <button class="filter-btn" data-filter="rpg">Dungeon Quest</button>
+                            <button class="filter-btn" data-filter="racer">Synth Racer</button>
+                            <button class="filter-btn" data-filter="puzzle">Block Cascade</button>
+                        </div>
+
+                        <!-- Achievement Grid Container -->
+                        <div class="achievements-grid" id="achievementsGrid">
+                            <!-- JS will inject achievements dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 ArcadeVerse. Built fully client-side on custom Web Canvas & Audio engines.</p>
+            <div class="footer-links">
+                <a href="docs.html">Architecture Documentation</a>
+                <span class="separator">|</span>
+                <a href="profile.html">Achievements Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <!-- Modular Level Databases -->
+    <script src="assets/js/games/levels/level_1.js"></script>
+    <script src="assets/js/games/levels/level_2.js"></script>
+    <script src="assets/js/games/levels/level_3.js"></script>
+    <script src="assets/js/games/levels/level_4.js"></script>
+    <script src="assets/js/games/levels/level_5.js"></script>
+    <script src="assets/js/games/levels/level_6.js"></script>
+    <script src="assets/js/games/levels/level_7.js"></script>
+    <script src="assets/js/games/levels/level_8.js"></script>
+    <script src="assets/js/games/levels/level_9.js"></script>
+    <script src="assets/js/games/levels/level_10.js"></script>
+
+    <!-- Modular RPG Databases -->
+    <script src="assets/js/games/rpg_db/quests_1.js"></script>
+    <script src="assets/js/games/rpg_db/quests_2.js"></script>
+    <script src="assets/js/games/rpg_db/quests_3.js"></script>
+    <script src="assets/js/games/rpg_db/quests_4.js"></script>
+
+    <!-- Modular Sprite Databases -->
+    <script src="assets/js/games/sprites/sprites_knight_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_knight_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_slime_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_skeleton_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_dragon_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_bronze.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_silver.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_mythic.js"></script>
+    <script src="assets/js/games/sprites/sprites_shield_gold.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_player.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_scout.js"></script>
+
+    <script src="assets/js/core/storage.js"></script>
+    <script src="assets/js/core/sound.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

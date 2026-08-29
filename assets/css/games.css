@@ -1,0 +1,274 @@
+/* ==========================================================================
+   ArcadeVerse Games Room Stylesheet - Canvas Framing, HUD overlays, Selector
+   ========================================================================== */
+
+/* --- Games Layout Grid --- */
+.games-container {
+    flex: 1;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.games-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+}
+
+/* --- Sidebar Game Selector --- */
+.games-sidebar {
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-surface-alt);
+    border-radius: var(--border-radius);
+    padding: 1.25rem;
+    height: fit-content;
+}
+
+.sidebar-title {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-surface-alt);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.games-selector-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.selector-item {
+    background-color: var(--color-surface-alt);
+    border: 1px solid transparent;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: var(--transition-speed);
+}
+
+.selector-item:hover,
+.selector-item.active {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+    box-shadow: 0 0 10px var(--color-border-glow);
+}
+
+.selector-icon {
+    font-size: 1.5rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+.selector-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.selector-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text);
+}
+
+.selector-item.active .selector-name {
+    color: var(--color-primary);
+}
+
+.selector-type {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+}
+
+/* --- Main Game Panel --- */
+.game-main-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.game-header-bar {
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px var(--color-border-glow);
+}
+
+.active-game-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.game-badge {
+    background-color: var(--color-border);
+    color: var(--color-bg);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    border-radius: 2px;
+}
+
+#activeGameTitle {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.game-action-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* --- Canvas Frame & Overlays --- */
+.canvas-wrapper {
+    position: relative;
+    background-color: #000;
+    border: 3px solid var(--color-border);
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px var(--color-border-glow);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    width: 100%;
+}
+
+.canvas-wrapper canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.canvas-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--transition-speed) ease;
+    z-index: 10;
+}
+
+.canvas-overlay.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    text-align: center;
+    padding: 2rem;
+    max-width: 500px;
+}
+
+.overlay-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px var(--color-border-glow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.overlay-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+/* --- Instructions tabs --- */
+.instructions-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--color-surface-alt);
+    margin-bottom: 1.25rem;
+    gap: 0.5rem;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: var(--transition-speed);
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    text-shadow: 0 0 5px var(--color-primary-glow);
+}
+
+.tab-content-container {
+    min-height: 80px;
+}
+
+.tab-content {
+    display: none;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.controls-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.control-key-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.key-cap {
+    background-color: var(--color-surface-alt);
+    border: 2px solid var(--color-border);
+    box-shadow: 0 2px 0 var(--color-border);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+    min-width: 32px;
+    text-align: center;
+    color: var(--color-text);
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 900px) {
+    .games-layout {
+        grid-template-columns: 1fr;
+    }
+}

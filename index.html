@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcadeVerse - Ultimate Retro Gaming Hub</title>
+    <link rel="stylesheet" href="assets/css/core.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <span class="brand-glow">ARCADE</span><span class="brand-alt">VERSE</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link active">Dashboard</a>
+                <a href="games.html" class="nav-link">Games Room</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboards</a>
+                <a href="profile.html" class="nav-link">Player Profile</a>
+                <a href="docs.html" class="nav-link">Engine Docs</a>
+                <div class="theme-selector">
+                    <button class="theme-btn" id="themeBtn" aria-label="Switch Theme">
+                        <span class="theme-icon">⚡</span>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <button class="theme-opt" data-theme="cyberpunk">Cyberpunk</button>
+                        <button class="theme-opt" data-theme="retro">Retro Terminal</button>
+                        <button class="theme-opt" data-theme="synthwave">Synthwave</button>
+                        <button class="theme-opt" data-theme="dark">Midnight Dark</button>
+                        <button class="theme-opt" data-theme="light">Arcade Light</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Grid Dashboard -->
+    <main class="dashboard-container">
+        <!-- Hero Section -->
+        <section class="hero-banner">
+            <div class="hero-content">
+                <h1 class="hero-title animate-glitch">ENTER THE ARCADEVERSE</h1>
+                <p class="hero-subtitle">High-fidelity 2D Canvas games running on a custom, zero-dependency, procedural engine.</p>
+                <div class="hero-actions">
+                    <a href="games.html" class="btn btn-primary btn-glow">PLAY NOW</a>
+                    <a href="docs.html" class="btn btn-secondary">LEARN ENGINE</a>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="quick-stat">
+                    <span class="qs-val" id="qsGamesPlayed">0</span>
+                    <span class="qs-lbl">Games Played</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="qs-val" id="qsAchievements">0/48</span>
+                    <span class="qs-lbl">Achievements</span>
+                </div>
+                <div class="quick-stat">
+                    <span class="qs-val" id="qsTotalScore">0</span>
+                    <span class="qs-lbl">Cumulative Score</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="dashboard-grid">
+            <!-- Left Column: User Profile widget & Achievements Summary -->
+            <aside class="dash-sidebar">
+                <!-- User Profile Card -->
+                <div class="card card-profile">
+                    <div class="card-header">
+                        <h3>Player Profile</h3>
+                        <a href="profile.html" class="link-edit">Edit</a>
+                    </div>
+                    <div class="card-body profile-widget">
+                        <div class="profile-avatar-container">
+                            <canvas id="profileAvatarCanvas" width="96" height="96"></canvas>
+                        </div>
+                        <div class="profile-details">
+                            <h4 id="profileUsername">PlayerOne</h4>
+                            <p class="profile-rank" id="profileRank">Novice Arcade Gamer</p>
+                            <div class="xp-bar-container">
+                                <div class="xp-bar-fill" id="profileXpBar" style="width: 0%;"></div>
+                            </div>
+                            <div class="xp-text">
+                                <span id="profileXpCurrent">0 XP</span> / <span id="profileXpNext">100 XP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Achievements -->
+                <div class="card card-achievements">
+                    <div class="card-header">
+                        <h3>Recent Achievements</h3>
+                        <a href="profile.html#achievements" class="link-view-all">All (48)</a>
+                    </div>
+                    <div class="card-body">
+                        <ul class="achievement-list-mini" id="recentAchievementsList">
+                            <li class="achievement-itemlocked">
+                                <span class="ach-icon">🔒</span>
+                                <div class="ach-info">
+                                    <h5>First Token</h5>
+                                    <p>Play your first game on ArcadeVerse</p>
+                                </div>
+                            </li>
+                            <li class="achievement-itemlocked">
+                                <span class="ach-icon">🔒</span>
+                                <div class="ach-info">
+                                    <h5>Coin Collector</h5>
+                                    <p>Collect 100 coins in Retro Knight</p>
+                                </div>
+                            </li>
+                            <li class="achievement-itemlocked">
+                                <span class="ach-icon">🔒</span>
+                                <div class="ach-info">
+                                    <h5>Wave Survivor</h5>
+                                    <p>Survive wave 10 in Neo-Defender</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Column: Game Selection grid -->
+            <section class="dash-content">
+                <div class="section-title-row">
+                    <h2>Available Arcade Games</h2>
+                    <span class="game-count">6 Titles Loaded</span>
+                </div>
+
+                <div class="games-grid">
+                    <!-- Game 1 -->
+                    <div class="game-card" data-game="platformer">
+                        <div class="game-thumb" style="background: radial-gradient(circle, #3d055a 0%, #110125 100%);">
+                            <div class="game-icon">🛡️</div>
+                            <span class="game-genre">Platformer</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Retro Knight</h3>
+                            <p>Adventure through dangerous levels filled with traps, enemies, and coins in this physics platformer.</p>
+                            <div class="game-meta">
+                                <span class="difficulty diff-easy">Easy</span>
+                                <span class="highscore">Hi-Score: <b id="hsPlatformer">0</b></span>
+                            </div>
+                            <a href="games.html?game=platformer" class="btn btn-block btn-primary">Play Game</a>
+                        </div>
+                    </div>
+
+                    <!-- Game 2 -->
+                    <div class="game-card" data-game="tower_defense">
+                        <div class="game-thumb" style="background: radial-gradient(circle, #054a5a 0%, #011925 100%);">
+                            <div class="game-icon">📡</div>
+                            <span class="game-genre">Strategy</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Neo-Defender</h3>
+                            <p>Build defense grids, upgrade high-tech towers, and hold back waves of mechanical invading squads.</p>
+                            <div class="game-meta">
+                                <span class="difficulty diff-medium">Medium</span>
+                                <span class="highscore">Hi-Score: <b id="hsTowerDefense">0</b></span>
+                            </div>
+                            <a href="games.html?game=tower_defense" class="btn btn-block btn-primary">Play Game</a>
+                        </div>
+                    </div>
+
+                    <!-- Game 3 -->
+                    <div class="game-card" data-game="space_shooter">
+                        <div class="game-thumb" style="background: radial-gradient(circle, #5a053c 0%, #250119 100%);">
+                            <div class="game-icon">🚀</div>
+                            <span class="game-genre">Shoot 'Em Up</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Cosmic Void</h3>
+                            <p>Blast through asteroid fields and dodge bullet patterns. Defeat large modular bosses in space.</p>
+                            <div class="game-meta">
+                                <span class="difficulty diff-hard">Hard</span>
+                                <span class="highscore">Hi-Score: <b id="hsSpaceShooter">0</b></span>
+                            </div>
+                            <a href="games.html?game=space_shooter" class="btn btn-block btn-primary">Play Game</a>
+                        </div>
+                    </div>
+
+                    <!-- Game 4 -->
+                    <div class="game-card" data-game="rpg">
+                        <div class="game-thumb" style="background: radial-gradient(circle, #1a5a05 0%, #082501 100%);">
+                            <div class="game-icon">🗺️</div>
+                            <span class="game-genre">Adventure RPG</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Dungeon Quest</h3>
+                            <p>Explore top-down retro chambers, engage in real-time combat, accept NPC quests, and craft equipment.</p>
+                            <div class="game-meta">
+                                <span class="difficulty diff-medium">Medium</span>
+                                <span class="highscore">Hi-Score: <b id="hsRpg">0</b></span>
+                            </div>
+                            <a href="games.html?game=rpg" class="btn btn-block btn-primary">Play Game</a>
+                        </div>
+                    </div>
+
+                    <!-- Game 5 -->
+                    <div class="game-card" data-game="racer">
+                        <div class="game-thumb" style="background: radial-gradient(circle, #5a4805 0%, #251c01 100%);">
+                            <div class="game-icon">🏎️</div>
+                            <span class="game-genre">Racing</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Synth Racer</h3>
+                            <p>Speed down a neon-drenched retro pseudo-3D grid highway, dodging traffic in high-speed time trials.</p>
+                            <div class="game-meta">
+                                <span class="difficulty diff-easy">Easy</span>
+                                <span class="highscore">Hi-Score: <b id="hsRacer">0</b></span>
+                            </div>
+                            <a href="games.html?game=racer" class="btn btn-block btn-primary">Play Game</a>
+                        </div>
+                    </div>
+
+                    <!-- Game 6 -->
+                    <div class="game-card" data-game="puzzle">
+                        <div class="game-thumb" style="background: radial-gradient(circle, #48055a 0%, #1e0125 100%);">
+                            <div class="game-icon">🧱</div>
+                            <span class="game-genre">Puzzle</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Block Cascade</h3>
+                            <p>Line up falling glowing blocks, score combos with line clearances, and manage speeds as blocks pile up.</p>
+                            <div class="game-meta">
+                                <span class="difficulty diff-easy">Easy</span>
+                                <span class="highscore">Hi-Score: <b id="hsPuzzle">0</b></span>
+                            </div>
+                            <a href="games.html?game=puzzle" class="btn btn-block btn-primary">Play Game</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 ArcadeVerse. Built fully client-side on custom Web Canvas & Audio engines.</p>
+            <div class="footer-links">
+                <a href="docs.html">Architecture Documentation</a>
+                <span class="separator">|</span>
+                <a href="profile.html">Achievements Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global Sound Toggle Component (Floating Action Button) -->
+    <div class="fab-audio-container">
+        <button class="fab-audio" id="fabAudioToggle" aria-label="Toggle Audio">
+            <span class="audio-icon">🔊</span>
+        </button>
+    </div>
+
+    <!-- Core Storage, Audio, and UI scripts -->
+    <!-- Modular Level Databases -->
+    <script src="assets/js/games/levels/level_1.js"></script>
+    <script src="assets/js/games/levels/level_2.js"></script>
+    <script src="assets/js/games/levels/level_3.js"></script>
+    <script src="assets/js/games/levels/level_4.js"></script>
+    <script src="assets/js/games/levels/level_5.js"></script>
+    <script src="assets/js/games/levels/level_6.js"></script>
+    <script src="assets/js/games/levels/level_7.js"></script>
+    <script src="assets/js/games/levels/level_8.js"></script>
+    <script src="assets/js/games/levels/level_9.js"></script>
+    <script src="assets/js/games/levels/level_10.js"></script>
+
+    <!-- Modular RPG Databases -->
+    <script src="assets/js/games/rpg_db/quests_1.js"></script>
+    <script src="assets/js/games/rpg_db/quests_2.js"></script>
+    <script src="assets/js/games/rpg_db/quests_3.js"></script>
+    <script src="assets/js/games/rpg_db/quests_4.js"></script>
+
+    <!-- Modular Sprite Databases -->
+    <script src="assets/js/games/sprites/sprites_knight_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_knight_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_slime_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_skeleton_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_dragon_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_bronze.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_silver.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_mythic.js"></script>
+    <script src="assets/js/games/sprites/sprites_shield_gold.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_player.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_scout.js"></script>
+
+    <script src="assets/js/core/storage.js"></script>
+    <script src="assets/js/core/sound.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
