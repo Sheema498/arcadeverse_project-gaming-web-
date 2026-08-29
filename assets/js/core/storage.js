@@ -354,6 +354,33 @@ const StorageEngine = {
         this.getProfile(); // Re-initialize default profile
         this.initLeaderboard(); // Re-initialize bot scores
         window.location.reload();
+    },
+
+    exportProfileData() {
+        const profile = this.getProfile();
+        const achievements = this.getUnlockedAchievements();
+        return JSON.stringify({
+            profile,
+            achievements,
+            version: '1.0.0',
+            exportedAt: new Date().toISOString()
+        });
+    },
+
+    importProfileData(jsonString) {
+        try {
+            const data = JSON.parse(jsonString);
+            if (data && data.profile && Array.isArray(data.achievements)) {
+                this.set('profile', data.profile);
+                this.set('unlocked_achievements', data.achievements);
+                this.updateGlobalXPLevel(data.profile);
+                return true;
+            }
+            return false;
+        } catch (e) {
+            console.error('Failed to import profile data:', e);
+            return false;
+        }
     }
 };
 
