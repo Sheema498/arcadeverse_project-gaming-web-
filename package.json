@@ -17,7 +17,7 @@
     "ecs"
   ],
   "author": "Antigravity Team",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "dependencies": {
     "vite": "^4.4.9"
   },
