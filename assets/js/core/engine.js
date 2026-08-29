@@ -72,6 +72,20 @@ class Vector2 {
     copy() {
         return new Vector2(this.x, this.y);
     }
+
+    lerp(v, amt) {
+        this.x += (v.x - this.x) * amt;
+        this.y += (v.y - this.y) * amt;
+        return this;
+    }
+
+    equals(v, epsilon = 1e-5) {
+        return Math.abs(this.x - v.x) < epsilon && Math.abs(this.y - v.y) < epsilon;
+    }
+
+    heading() {
+        return Math.atan2(this.y, this.x);
+    }
 }
 
 // --- 2. Input Manager ---

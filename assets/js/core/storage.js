@@ -350,7 +350,14 @@ const StorageEngine = {
 
     // --- Reset System ---
     resetAllData() {
-        localStorage.clear();
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith(STORAGE_KEY_PREFIX)) {
+                keysToRemove.push(key);
+            }
+        }
+        keysToRemove.forEach(key => localStorage.removeItem(key));
         this.getProfile(); // Re-initialize default profile
         this.initLeaderboard(); // Re-initialize bot scores
         window.location.reload();
@@ -381,6 +388,33 @@ const StorageEngine = {
             console.error('Failed to import profile data:', e);
             return false;
         }
+        if (typeof window !== 'undefined' && window.location && typeof window.location.reload === 'function') {
+            window.location.reload();
+        }
+    },
+
+    resetHighScore(gameId) {
+        const profile = this.getProfile();
+        if (profile.stats[gameId]) {
+            profile.stats[gameId].highScore = 0;
+            
+            // Recalculate cumulative score
+            let newCumScore = 0;
+            for (const key in profile.stats) {
+                newCumScore += profile.stats[key].highScore || 0;
+            }
+            profile.cumulativeScore = newCumScore;
+            
+            this.saveProfile(profile);
+            this.updateLeaderboardPlayer(profile.username, 0, gameId, profile.level);
+            return true;
+        }
+        return false;
+    },
+
+    resetAchievements() {
+        this.set('unlocked_achievements', []);
+        return true;
     }
 };
 
