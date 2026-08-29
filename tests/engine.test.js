@@ -58,6 +58,26 @@ describe('Vector2 Mathematics Library', () => {
         const v2 = new Vector2(4, 5);
         expect(v1.dist(v2)).toBe(5);
     });
+
+    test('should linearly interpolate towards another vector correctly', () => {
+        const v1 = new Vector2(0, 0);
+        const v2 = new Vector2(10, 20);
+        v1.lerp(v2, 0.5);
+        expect(v1.x).toBe(5);
+        expect(v1.y).toBe(10);
+    });
+
+    test('should check equality correctly', () => {
+        const v1 = new Vector2(3.000001, 4);
+        const v2 = new Vector2(3, 4);
+        expect(v1.equals(v2)).toBe(true);
+        expect(v1.equals(v2, 1e-7)).toBe(false);
+    });
+
+    test('should calculate heading angle correctly', () => {
+        const v = new Vector2(0, 10);
+        expect(v.heading()).toBeCloseTo(Math.PI / 2);
+    });
 });
 
 describe('ECS Entity and Components', () => {
