@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcadeVerse Global Leaderboards - Simulated Multiplayer Rankings</title>
+    <link rel="stylesheet" href="assets/css/core.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <span class="brand-glow">ARCADE</span><span class="brand-alt">VERSE</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="games.html" class="nav-link">Games Room</a>
+                <a href="leaderboard.html" class="nav-link active">Leaderboards</a>
+                <a href="profile.html" class="nav-link">Player Profile</a>
+                <a href="docs.html" class="nav-link">Engine Docs</a>
+                <div class="theme-selector">
+                    <button class="theme-btn" id="themeBtn" aria-label="Switch Theme">
+                        <span class="theme-icon">⚡</span>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <button class="theme-opt" data-theme="cyberpunk">Cyberpunk</button>
+                        <button class="theme-opt" data-theme="retro">Retro Terminal</button>
+                        <button class="theme-opt" data-theme="synthwave">Synthwave</button>
+                        <button class="theme-opt" data-theme="dark">Midnight Dark</button>
+                        <button class="theme-opt" data-theme="light">Arcade Light</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Leaderboard Dashboard -->
+    <main class="dashboard-container">
+        <div class="section-title-row">
+            <h2>Global Live Leaderboard</h2>
+            <p>Compete against simulated AI players in real time. Watch their scores change as they "play" in the background!</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Left Side: Mini-Games High Scores Selector -->
+            <aside class="dash-sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Game Filters</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="vertical-tabs" id="leaderboardTabSelector">
+                            <li class="v-tab active" data-game="global">🌐 Overall Rankings</li>
+                            <li class="v-tab" data-game="platformer">🛡️ Retro Knight</li>
+                            <li class="v-tab" data-game="tower_defense">📡 Neo-Defender</li>
+                            <li class="v-tab" data-game="space_shooter">🚀 Cosmic Void</li>
+                            <li class="v-tab" data-game="rpg">🗺️ Dungeon Quest</li>
+                            <li class="v-tab" data-game="racer">🏎️ Synth Racer</li>
+                            <li class="v-tab" data-game="puzzle">🧱 Block Cascade</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Your Rankings</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="stat-list">
+                            <div class="stat-row"><span>Global Standings</span> <b id="userGlobalRank">#100+</b></div>
+                            <div class="stat-row"><span>Total Matches Played</span> <b id="userTotalMatches">0</b></div>
+                            <div class="stat-row"><span>Total XP Earned</span> <b id="userTotalXp">0 XP</b></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Side: Rankings Table -->
+            <section class="dash-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 id="leaderboardTitle">Overall Rankings</h3>
+                        <span class="live-pulse">● LIVE SCORE NETWORK</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table" id="leaderboardTable">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Player</th>
+                                        <th>Game Stats</th>
+                                        <th>XP Level</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaderboardBody">
+                                    <!-- Dynamic rows will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 ArcadeVerse. Built fully client-side on custom Web Canvas & Audio engines.</p>
+            <div class="footer-links">
+                <a href="docs.html">Architecture Documentation</a>
+                <span class="separator">|</span>
+                <a href="profile.html">Achievements Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <!-- Modular Level Databases -->
+    <script src="assets/js/games/levels/level_1.js"></script>
+    <script src="assets/js/games/levels/level_2.js"></script>
+    <script src="assets/js/games/levels/level_3.js"></script>
+    <script src="assets/js/games/levels/level_4.js"></script>
+    <script src="assets/js/games/levels/level_5.js"></script>
+    <script src="assets/js/games/levels/level_6.js"></script>
+    <script src="assets/js/games/levels/level_7.js"></script>
+    <script src="assets/js/games/levels/level_8.js"></script>
+    <script src="assets/js/games/levels/level_9.js"></script>
+    <script src="assets/js/games/levels/level_10.js"></script>
+
+    <!-- Modular RPG Databases -->
+    <script src="assets/js/games/rpg_db/quests_1.js"></script>
+    <script src="assets/js/games/rpg_db/quests_2.js"></script>
+    <script src="assets/js/games/rpg_db/quests_3.js"></script>
+    <script src="assets/js/games/rpg_db/quests_4.js"></script>
+
+    <!-- Modular Sprite Databases -->
+    <script src="assets/js/games/sprites/sprites_knight_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_knight_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_slime_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_skeleton_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_dragon_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_bronze.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_silver.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_mythic.js"></script>
+    <script src="assets/js/games/sprites/sprites_shield_gold.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_player.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_scout.js"></script>
+
+    <script src="assets/js/core/storage.js"></script>
+    <script src="assets/js/core/sound.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

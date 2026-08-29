@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcadeVerse Technical Reference & Engine Manual</title>
+    <link rel="stylesheet" href="assets/css/core.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <span class="brand-glow">ARCADE</span><span class="brand-alt">VERSE</span>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="games.html" class="nav-link">Games Room</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboards</a>
+                <a href="profile.html" class="nav-link">Player Profile</a>
+                <a href="docs.html" class="nav-link active">Engine Docs</a>
+                <div class="theme-selector">
+                    <button class="theme-btn" id="themeBtn" aria-label="Switch Theme">
+                        <span class="theme-icon">⚡</span>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <button class="theme-opt" data-theme="cyberpunk">Cyberpunk</button>
+                        <button class="theme-opt" data-theme="retro">Retro Terminal</button>
+                        <button class="theme-opt" data-theme="synthwave">Synthwave</button>
+                        <button class="theme-opt" data-theme="dark">Midnight Dark</button>
+                        <button class="theme-opt" data-theme="light">Arcade Light</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="dashboard-container">
+        <div class="section-title-row">
+            <h2>Engine Manual & Technical Reference</h2>
+            <p>Explore the architecture, equations, and structures behind the custom 2D Canvas Engine and Audio Synthesizer.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Sidebar: Docs Navigation -->
+            <aside class="dash-sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Sections</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="vertical-tabs" id="docsNav">
+                            <li class="v-tab active" data-sec="intro">1. Introduction</li>
+                            <li class="v-tab" data-sec="engine">2. 2D ECS Game Engine</li>
+                            <li class="v-tab" data-sec="physics">3. Physics & Collisions</li>
+                            <li class="v-tab" data-sec="audio">4. Web Audio Synthesizer</li>
+                            <li class="v-tab" data-sec="pseudo3d">5. Pseudo-3D Racer Projection</li>
+                            <li class="v-tab" data-sec="database">6. Procedural Data Systems</li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <section class="dash-content">
+                <div class="card">
+                    <div class="card-body docs-body" id="docsContent">
+                        <!-- Section: Introduction -->
+                        <div class="docs-section active" id="sec-intro">
+                            <h2>1. Introduction to ArcadeVerse</h2>
+                            <p>ArcadeVerse is an advanced retro-gaming portal designed to operate entirely within the user's browser. It features zero dependencies, zero external images or audio files, and runs at a constant 60 FPS utilizing HTML5 Canvas and the Web Audio API.</p>
+                            <p>Every sprite, animation frame, sound effect, and background music score is calculated procedurally in JavaScript at runtime. The portal represents a self-contained gaming system built on a custom Entity-Component-System (ECS) engine framework.</p>
+                            <div class="alert alert-info">
+                                <strong>System Note:</strong> All game states, high scores, achievements, and custom player profiles are persisted client-side in <code>localStorage</code>.
+                            </div>
+                        </div>
+
+                        <!-- Section: ECS Game Engine -->
+                        <div class="docs-section" id="sec-engine">
+                            <h2>2. 2D Entity-Component-System (ECS)</h2>
+                            <p>The core engine (<code>engine.js</code>) employs a lightweight, high-performance Entity-Component-System design pattern. This decouples data from logic, facilitating modular expansion.</p>
+                            <ul>
+                                <li><strong>Entity:</strong> A unique numeric identifier representing an object in the world.</li>
+                                <li><strong>Component:</strong> Plain structures carrying state data (e.g. <code>Transform</code>, <code>Velocity</code>, <code>Sprite</code>, <code>Collider</code>).</li>
+                                <li><strong>System:</strong> Logic processors that iterate over entities matching specific component masks (e.g. <code>PhysicsSystem</code>, <code>RenderSystem</code>).</li>
+                            </ul>
+                            <h3>Core Game Loop</h3>
+                            <p>The loop employs a fixed timestep update with a variable rendering interpolator to prevent physics tunneling and guarantee deterministic calculations across different monitor refresh rates.</p>
+                            <pre><code>// Pseudocode of the timestep loop
+let lastTime = performance.now();
+let accumulator = 0.0;
+const dt = 1000.0 / 60.0; // 60 FPS update
+
+function loop(time) {
+    let elapsed = time - lastTime;
+    lastTime = time;
+    accumulator += elapsed;
+    
+    while(accumulator >= dt) {
+        engine.update(dt);
+        accumulator -= dt;
+    }
+    
+    let alpha = accumulator / dt;
+    engine.render(alpha);
+    requestAnimationFrame(loop);
+}</code></pre>
+                        </div>
+
+                        <!-- Section: Physics and Collisions -->
+                        <div class="docs-section" id="sec-physics">
+                            <h2>3. Physics & Bounding Box Collisions</h2>
+                            <p>The engine resolves static and dynamic collisions through Axis-Aligned Bounding Box (AABB) projections and Circle-to-AABB intersection resolutions.</p>
+                            <h3>AABB Intersection Equation</h3>
+                            <p>For two bounding boxes \(A\) and \(B\), defined by their min/max coordinate vectors, an intersection occurs if and only if:</p>
+                            \[
+                            (A_{min.x} \le B_{max.x} \land A_{max.x} \ge B_{min.x}) \land (A_{min.y} \le B_{max.y} \land A_{max.y} \ge B_{min.y})
+                            \]
+                            <h3>Resolution</h3>
+                            <p>When an intersection is detected, the overlap vector is computed along both axes. The entity is projected back along the axis of minimum penetration, and its velocity along that axis is set to zero or multiplied by a coefficient of restitution (bounciness).</p>
+                        </div>
+
+                        <!-- Section: Audio Synthesizer -->
+                        <div class="docs-section" id="sec-audio">
+                            <h2>4. Audio Synthesis via Web Audio API</h2>
+                            <p>ArcadeVerse has no static audio assets. Sound effects are synthesized on-demand, and backing tracks are played via custom code scheduler nodes.</p>
+                            <h3>Additive & Subtractive Synthesizer Diagram</h3>
+                            <pre><code>[OscillatorNode] --\
+                     --> [BiquadFilterNode] --> [GainNode] --> [AudioDestination]
+[NoiseBuffer]   --/</code></pre>
+                            <h3>Custom Synthesizer Settings</h3>
+                            <p>The sound library employs envelopes to adjust frequency and gain parameters over time. An ADSR (Attack, Decay, Sustain, Release) envelope is used to sculpt sounds:</p>
+                            <ul>
+                                <li><strong>Laser:</strong> Expontential pitch sweep down from 1200 Hz to 200 Hz over 0.15s, using a sawtooth wave.</li>
+                                <li><strong>Explosion:</strong> Bandpass filtered white noise buffer modulated with an exponential amplitude decay.</li>
+                                <li><strong>Coin:</strong> Quick double-tone pitch shift (e.g. 987 Hz to 1318 Hz) using sine waves to generate a bright chiptune ring.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Section: Pseudo-3D Projection -->
+                        <div class="docs-section" id="sec-pseudo3d">
+                            <h2>5. Pseudo-3D Racer Road Projection</h2>
+                            <p>The Synth Racer game generates curved highways and hills using a classic pseudo-3D perspective projection technique similar to classic arcade cabinets.</p>
+                            <h3>Projective Transformation</h3>
+                            <p>Points along the road curve are represented in 3D world space \((x, y, z)\) and projected onto the 2D screen coordinate space \((X, Y)\) using the equations:</p>
+                            \[
+                            X = \frac{Width}{2} + \frac{x - Camera_x}{z - Camera_z} \times Focus
+                            \]
+                            \[
+                            Y = \frac{Height}{2} - \frac{y - Camera_y}{z - Camera_z} \times Focus
+                            \]
+                            <p>Where <code>Focus</code> is the screen projection distance. Scenery sprites are rendered with a scale factor \(S\) proportional to distance: \(S = \frac{Focus}{z - Camera_z}\).</p>
+                        </div>
+
+                        <!-- Section: Procedural Data Systems -->
+                        <div class="docs-section" id="sec-database">
+                            <h2>6. Procedural Data Systems & LOC Scaling</h2>
+                            <p>To establish a rich, content-filled codebase, ArcadeVerse features deep data matrices and script catalogs, including:</p>
+                            <ul>
+                                <li><strong>Quest Catalog:</strong> Over 100 branching RPG quests, tracking pre-requisites, NPC IDs, dialogue trees, rewards, and objectives.</li>
+                                <li><strong>Dialogue Trees:</strong> Nested choice options mapped via custom key IDs to manage NPC conversations dynamically.</li>
+                                <li><strong>Map Matrices:</strong> Large 2D arrays containing tile IDs for platformer layouts, RPG zones, and tower defense paths.</li>
+                                <li><strong>Procedural Sprite Catalog:</strong> Pixel-art grids (e.g. 8x8, 16x16, 32x32) defined as numeric color matrices, which are converted to image canvases on load.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 ArcadeVerse. Built fully client-side on custom Web Canvas & Audio engines.</p>
+            <div class="footer-links">
+                <a href="docs.html">Architecture Documentation</a>
+                <span class="separator">|</span>
+                <a href="profile.html">Achievements Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <!-- Modular Level Databases -->
+    <script src="assets/js/games/levels/level_1.js"></script>
+    <script src="assets/js/games/levels/level_2.js"></script>
+    <script src="assets/js/games/levels/level_3.js"></script>
+    <script src="assets/js/games/levels/level_4.js"></script>
+    <script src="assets/js/games/levels/level_5.js"></script>
+    <script src="assets/js/games/levels/level_6.js"></script>
+    <script src="assets/js/games/levels/level_7.js"></script>
+    <script src="assets/js/games/levels/level_8.js"></script>
+    <script src="assets/js/games/levels/level_9.js"></script>
+    <script src="assets/js/games/levels/level_10.js"></script>
+
+    <!-- Modular RPG Databases -->
+    <script src="assets/js/games/rpg_db/quests_1.js"></script>
+    <script src="assets/js/games/rpg_db/quests_2.js"></script>
+    <script src="assets/js/games/rpg_db/quests_3.js"></script>
+    <script src="assets/js/games/rpg_db/quests_4.js"></script>
+
+    <!-- Modular Sprite Databases -->
+    <script src="assets/js/games/sprites/sprites_knight_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_knight_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_slime_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_skeleton_walk.js"></script>
+    <script src="assets/js/games/sprites/sprites_dragon_idle.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_bronze.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_silver.js"></script>
+    <script src="assets/js/games/sprites/sprites_weapon_mythic.js"></script>
+    <script src="assets/js/games/sprites/sprites_shield_gold.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_player.js"></script>
+    <script src="assets/js/games/sprites/sprites_space_scout.js"></script>
+
+    <script src="assets/js/core/storage.js"></script>
+    <script src="assets/js/core/sound.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
