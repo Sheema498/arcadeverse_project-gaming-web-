@@ -10,6 +10,7 @@ const SoundEngine = {
     tempo: 120,
     seqStep: 0,
     activeSong: null,
+    volumeLevel: 0.3,
 
     // Initialize Audio Context on user interaction
     init() {
@@ -18,7 +19,7 @@ const SoundEngine = {
             const AudioContextClass = window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioContextClass();
             this.masterGain = this.ctx.createGain();
-            this.masterGain.gain.value = this.muted ? 0 : 0.3; // Default master volume
+            this.masterGain.gain.value = this.muted ? 0 : this.volumeLevel; // Default master volume
             this.masterGain.connect(this.ctx.destination);
             
             // Check state
@@ -39,13 +40,45 @@ const SoundEngine = {
     toggleMute() {
         this.muted = !this.muted;
         if (this.masterGain) {
-            this.masterGain.gain.setValueAtTime(this.muted ? 0 : 0.3, this.ctx ? this.ctx.currentTime : 0);
+            this.masterGain.gain.setValueAtTime(this.muted ? 0 : this.volumeLevel, this.ctx ? this.ctx.currentTime : 0);
         }
         return this.muted;
     },
 
     isMuted() {
         return this.muted;
+    },
+
+    setVolume(vol) {
+        this.volumeLevel = Math.max(0.0, Math.min(1.0, vol));
+        if (this.masterGain && !this.muted) {
+            this.masterGain.gain.setValueAtTime(this.volumeLevel, this.ctx ? this.ctx.currentTime : 0);
+        }
+    },
+
+    getVolume() {
+        return this.volumeLevel;
+    },
+
+    playTone(frequency, type = 'sine', duration = 0.1, volume = 0.15) {
+        this.init();
+        if (this.muted || !this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(frequency, now);
+
+        gain.gain.setValueAtTime(volume, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+
+        osc.start(now);
+        osc.stop(now + duration);
     },
 
     // --- Procedural Sound Effects ---
