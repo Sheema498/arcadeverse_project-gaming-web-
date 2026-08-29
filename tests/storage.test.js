@@ -62,6 +62,37 @@ describe('Storage Engine and Achievements System', () => {
         expect(StorageEngine.getHighScore('platformer')).toBe(2000);
     });
 
+    test('should export and import profile data correctly', () => {
+        // Setup custom profile state
+        const originalProfile = StorageEngine.getProfile();
+        originalProfile.username = 'ExportTester';
+        originalProfile.xp = 1000;
+        StorageEngine.saveProfile(originalProfile);
+        StorageEngine.unlockAchievement('plat_first_step');
+
+        const exported = StorageEngine.exportProfileData();
+        expect(exported).toContain('ExportTester');
+        expect(exported).toContain('plat_first_step');
+
+        // Clear data
+        localStorage.clear();
+
+        // Import the data back
+        const importSuccess = StorageEngine.importProfileData(exported);
+        expect(importSuccess).toBe(true);
+
+        const importedProfile = StorageEngine.getProfile();
+        expect(importedProfile.username).toBe('ExportTester');
+        expect(importedProfile.xp).toBe(1050);
+        expect(StorageEngine.isAchievementUnlocked('plat_first_step')).toBe(true);
+    });
+
+    test('should reject invalid import profile data', () => {
+        const importSuccess = StorageEngine.importProfileData('invalid-json');
+        expect(importSuccess).toBe(false);
+
+        const importSuccessEmpty = StorageEngine.importProfileData('{}');
+        expect(importSuccessEmpty).toBe(false);
     test('should reset a single game high score correctly', () => {
         StorageEngine.saveHighScore('platformer', 3000);
         expect(StorageEngine.getHighScore('platformer')).toBe(3000);
