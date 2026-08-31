@@ -129,8 +129,8 @@ function drawProceduralAvatar(canvas, seed = 12345, colorTheme = 0) {
     }
 }
 
-function drawGlobalAvatars() {
-    const profile = StorageEngine.getProfile();
+function drawGlobalAvatars(stagedProfile = null) {
+    const profile = stagedProfile || StorageEngine.getProfile();
     const profileCanvas = document.getElementById('profileAvatarCanvas');
     const editorCanvas = document.getElementById('editorAvatarCanvas');
 
@@ -147,7 +147,7 @@ function initDashboardPage() {
     const qsa = document.getElementById('qsAchievements');
     const qsc = document.getElementById('qsTotalScore');
     if (qsg) qsg.textContent = profile.gamesPlayed;
-    if (qsa) qsa.textContent = `${StorageEngine.getUnlockedAchievements().length}/48`;
+    if (qsa) qsa.textContent = `${StorageEngine.getUnlockedAchievements().length}/32`;
     if (qsc) qsc.textContent = profile.cumulativeScore;
 
     // Profile Details Card
@@ -170,12 +170,15 @@ function initDashboardPage() {
     }
 
     // Dashboard Games Card Stats
-    document.getElementById('hsPlatformer').textContent = profile.stats.platformer.highScore || 0;
-    document.getElementById('hsTowerDefense').textContent = profile.stats.tower_defense.highScore || 0;
-    document.getElementById('hsSpaceShooter').textContent = profile.stats.space_shooter.highScore || 0;
-    document.getElementById('hsRpg').textContent = profile.stats.rpg.highScore || 0;
-    document.getElementById('hsRacer').textContent = profile.stats.racer.highScore || 0;
-    document.getElementById('hsPuzzle').textContent = profile.stats.puzzle.highScore || 0;
+    const hsTD = document.getElementById('hsTowerDefense');
+    const hsSpace = document.getElementById('hsSpaceShooter');
+    const hsRace = document.getElementById('hsRacer');
+    const hsPuz = document.getElementById('hsPuzzle');
+
+    if (hsTD) hsTD.textContent = profile.stats.tower_defense?.highScore || 0;
+    if (hsSpace) hsSpace.textContent = profile.stats.space_shooter?.highScore || 0;
+    if (hsRace) hsRace.textContent = profile.stats.racer?.highScore || 0;
+    if (hsPuz) hsPuz.textContent = profile.stats.puzzle?.highScore || 0;
 
     // Build achievements mini list
     const miniAchList = document.getElementById('recentAchievementsList');
@@ -212,7 +215,7 @@ function initGamesRoomPage() {
     
     // Check parameters routing selector query
     const urlParams = new URLSearchParams(window.location.search);
-    let requestedGame = urlParams.get('game') || 'platformer';
+    let requestedGame = urlParams.get('game') || 'tower_defense';
 
     // Sidebar selectors setup
     const selectorItems = document.querySelectorAll('.selector-item');
@@ -351,19 +354,15 @@ function launchGameCenter(gameId) {
     
     // Inject overlays text based on game selection
     const names = {
-        platformer: 'Retro Knight',
         tower_defense: 'Neo-Defender',
         space_shooter: 'Cosmic Void',
-        rpg: 'Dungeon Quest',
         racer: 'Synth Racer',
         puzzle: 'Block Cascade'
     };
 
     const genres = {
-        platformer: '2D Sidescroller Platformer',
         tower_defense: 'Base Grid Strategy TD',
         space_shooter: 'Scrolling Space Shooter',
-        rpg: 'Top-down NPC Adventure RPG',
         racer: 'Pseudo-3D Highway Racer',
         puzzle: 'Falling Glowing Blocks'
     };
@@ -376,14 +375,10 @@ function launchGameCenter(gameId) {
     overlay.classList.remove('hide');
 
     // Instantiate game logic class
-    if (gameId === 'platformer') {
-        currentActiveGame = new RetroKnightGame(canvas, input, SoundEngine, StorageEngine);
-    } else if (gameId === 'tower_defense') {
+    if (gameId === 'tower_defense') {
         currentActiveGame = new TowerDefenseGame(canvas, input, SoundEngine, StorageEngine);
     } else if (gameId === 'space_shooter') {
         currentActiveGame = new SpaceShooterGame(canvas, input, SoundEngine, StorageEngine);
-    } else if (gameId === 'rpg') {
-        currentActiveGame = new DungeonRpgGame(canvas, input, SoundEngine, StorageEngine);
     } else if (gameId === 'racer') {
         currentActiveGame = new SynthRacerGame(canvas, input, SoundEngine, StorageEngine);
     } else if (gameId === 'puzzle') {
@@ -396,11 +391,6 @@ function launchGameCenter(gameId) {
 
 function populateGameInstructions(gameId) {
     const instructions = {
-        platformer: {
-            how: 'Guide Sir Galen across brick platforms. Defeat slime bugs by jumping on top of them. Reach the portal exit at the end to clear the levels.',
-            ctrl: '<div class="control-key-row"><span class="key-cap">A</span> / <span class="key-cap">D</span> <span>Move Left / Right</span></div><div class="control-key-row"><span class="key-cap">Space</span> / <span class="key-cap">W</span> <span>Jump / Bouncy platform heights</span></div>',
-            lore: 'Sir Galen must collect the golden bits to prevent code integrity failure.'
-        },
         tower_defense: {
             how: 'Click anywhere outside the path segments to place defense towers. Click existing towers to upgrade them (+100 gold cost). Survive waves of bots.',
             ctrl: '<div class="control-key-row"><span>Mouse Left Click</span> <span>Place / Upgrade Towers</span></div><div class="control-key-row"><span>Sidebar Option</span> <span>Toggle between Turret Types</span></div>',
@@ -410,11 +400,6 @@ function populateGameInstructions(gameId) {
             how: 'Dodge bullets and asteroids. Shoot enemy ships. Defeat the Alpha mothership boss at the end of the wave to claim space supremacy.',
             ctrl: '<div class="control-key-row"><span class="key-cap">A</span> / <span class="key-cap">D</span> <span>Slide Left / Right</span></div><div class="control-key-row"><span class="key-cap">Space</span> / <span class="key-cap">J</span> <span>Autofire Laser weapons</span></div>',
             lore: 'Launch your ship into the far reaches of the galactic buffer array.'
-        },
-        rpg: {
-            how: 'Explore top-down dungeons. Attack slimes and skeletons. Talk to Eldar to receive quest items, and shop swords upgrades from Jack.',
-            ctrl: '<div class="control-key-row"><span class="key-cap">W</span> / <span class="key-cap">A</span> / <span class="key-cap">S</span> / <span class="key-cap">D</span> <span>Top-down movement</span></div><div class="control-key-row"><span class="key-cap">Space</span> / <span class="key-cap">J</span> <span>Sword swing / Open chests</span></div><div class="control-key-row"><span class="key-cap">1</span> / <span class="key-cap">2</span> / <span class="key-cap">3</span> <span>Pick dialogue choice numbers</span></div>',
-            lore: 'Uncover the treasure vault within the recursive chambers.'
         },
         racer: {
             how: 'Accelerate and drift curves to complete checkpoints before the timer expires. Dodge slower yellow traffic vehicles along roads.',
@@ -435,9 +420,16 @@ function populateGameInstructions(gameId) {
 
 let lastTime = 0;
 function startGameLoop() {
+    if (activeGameLoopId) {
+        cancelAnimationFrame(activeGameLoopId);
+        activeGameLoopId = null;
+    }
     lastTime = performance.now();
     const frame = (time) => {
-        if (!currentActiveGame || currentActiveGame.gameState !== 'playing') return;
+        if (!currentActiveGame || currentActiveGame.gameState !== 'playing') {
+            activeGameLoopId = null;
+            return;
+        }
 
         const dt = time - lastTime;
         lastTime = time;
@@ -477,14 +469,14 @@ function initProfilePage() {
     if (randBtn) {
         randBtn.addEventListener('click', () => {
             profile.avatarSeed = Math.floor(Math.random() * 90000);
-            drawGlobalAvatars();
+            drawGlobalAvatars(profile);
         });
     }
 
     if (colorBtn) {
         colorBtn.addEventListener('click', () => {
             profile.avatarTheme++;
-            drawGlobalAvatars();
+            drawGlobalAvatars(profile);
         });
     }
 
@@ -500,13 +492,19 @@ function initProfilePage() {
     }
 
     // Stats injection details
-    document.getElementById('statPlayTime').textContent = `${Math.floor(profile.gamesPlayed * 1.5)}m`; // estimate
-    document.getElementById('statCumulativeScore').textContent = profile.cumulativeScore;
-    document.getElementById('statPlatformerScore').textContent = profile.stats.platformer.highScore || 0;
-    document.getElementById('statTowerWaves').textContent = profile.stats.tower_defense.maxWave || profile.stats.tower_defense.highScore / 250 || 0;
-    document.getElementById('statBossesDefeated').textContent = profile.stats.space_shooter.bossesDefeated || 0;
-    document.getElementById('statBestLap').textContent = profile.stats.racer.bestLapTime ? `${profile.stats.racer.bestLapTime}s` : '--s';
-    document.getElementById('statPuzzleLines').textContent = profile.stats.puzzle.linesCleared || 0;
+    const statPT = document.getElementById('statPlayTime');
+    const statCS = document.getElementById('statCumulativeScore');
+    const statTW = document.getElementById('statTowerWaves');
+    const statBD = document.getElementById('statBossesDefeated');
+    const statBL = document.getElementById('statBestLap');
+    const statPL = document.getElementById('statPuzzleLines');
+
+    if (statPT) statPT.textContent = `${Math.floor(profile.gamesPlayed * 1.5)}m`;
+    if (statCS) statCS.textContent = profile.cumulativeScore;
+    if (statTW) statTW.textContent = profile.stats.tower_defense?.maxWave || profile.stats.tower_defense?.highScore / 250 || 0;
+    if (statBD) statBD.textContent = profile.stats.space_shooter?.bossesDefeated || 0;
+    if (statBL) statBL.textContent = profile.stats.racer?.bestLapTime ? `${profile.stats.racer.bestLapTime}s` : '--s';
+    if (statPL) statPL.textContent = profile.stats.puzzle?.linesCleared || 0;
 
     // Populate Achievements panel list
     populateAchievementsList('all');
@@ -528,7 +526,8 @@ function populateAchievementsList(filter = 'all') {
 
     grid.innerHTML = '';
     const unlocked = StorageEngine.getUnlockedAchievements();
-    document.getElementById('achievementProgressText').textContent = `${unlocked.length} / 48 Unlocked`;
+    const progText = document.getElementById('achievementProgressText');
+    if (progText) progText.textContent = `${unlocked.length} / 32 Unlocked`;
 
     ACHIEVEMENT_DATABASE.forEach(ach => {
         if (filter !== 'all' && ach.game !== filter) return;
@@ -584,14 +583,12 @@ function renderLeaderboardRows(gameId) {
     // Title label configuration
     const titles = {
         global: 'Overall Cumulative Rankings',
-        platformer: 'Retro Knight Standings',
         tower_defense: 'Neo-Defender Records',
         space_shooter: 'Cosmic Void Survivors',
-        rpg: 'Dungeon Quest Heroes',
         racer: 'Synth Racer Drivers',
         puzzle: 'Block Cascade Builders'
     };
-    document.getElementById('leaderboardTitle').textContent = titles[gameId];
+    document.getElementById('leaderboardTitle').textContent = titles[gameId] || 'Leaderboard Rankings';
 
     // Grab top 12 records
     const displayList = scores.slice(0, 12);
@@ -602,11 +599,27 @@ function renderLeaderboardRows(gameId) {
 
         const scoreVal = gameId === 'global' ? entry.cumulativeScore : (entry.stats[gameId] || 0);
 
+        const ranks = [
+            'Novice Arcade Gamer',
+            'Pixel Explorer',
+            'Retro Challenger',
+            'Coin Collector',
+            'Bit Crusher',
+            'Grid Strategist',
+            'Space Invader',
+            'Dungeon Delver',
+            'Neon Racer',
+            'Cascade Architect',
+            'Grand Master of the Verse'
+        ];
+        const rankIndex = Math.min(Math.floor(entry.level / 2), ranks.length - 1);
+        const rankTitle = ranks[rankIndex];
+
         tr.innerHTML = `
             <td><b>#${index + 1}</b></td>
-            <td>${entry.username} ${entry.isPlayer ? '👤 (You)' : ''}</td>
-            <td>Lvl ${entry.level}</td>
-            <td>XP Bar (Simulated)</td>
+            <td class="player-cell">${entry.username} ${entry.isPlayer ? '<span class="you-badge">👤 (You)</span>' : ''}</td>
+            <td><span class="lvl-badge">Lvl ${entry.level}</span></td>
+            <td class="rank-title-cell">${rankTitle}</td>
             <td><b style="color:var(--color-primary);">${scoreVal.toLocaleString()}</b></td>
         `;
         body.appendChild(tr);

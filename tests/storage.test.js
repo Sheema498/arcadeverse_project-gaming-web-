@@ -33,33 +33,33 @@ describe('Storage Engine and Achievements System', () => {
     });
 
     test('should unlock achievements correctly', () => {
-        const unlockSuccess = StorageEngine.unlockAchievement('plat_first_step');
+        const unlockSuccess = StorageEngine.unlockAchievement('td_first_tower');
         expect(unlockSuccess).toBe(true);
 
-        const isUnlocked = StorageEngine.isAchievementUnlocked('plat_first_step');
+        const isUnlocked = StorageEngine.isAchievementUnlocked('td_first_tower');
         expect(isUnlocked).toBe(true);
 
         // Attempting to unlock again should return false
-        const doubleUnlock = StorageEngine.unlockAchievement('plat_first_step');
+        const doubleUnlock = StorageEngine.unlockAchievement('td_first_tower');
         expect(doubleUnlock).toBe(false);
     });
 
     test('should calculate high scores correctly', () => {
-        const firstScore = StorageEngine.saveHighScore('platformer', 1500);
+        const firstScore = StorageEngine.saveHighScore('space_shooter', 1500);
         expect(firstScore).toBe(true);
 
-        const high = StorageEngine.getHighScore('platformer');
+        const high = StorageEngine.getHighScore('space_shooter');
         expect(high).toBe(1500);
 
         // Lower score should not overwrite
-        const lowerScore = StorageEngine.saveHighScore('platformer', 1200);
+        const lowerScore = StorageEngine.saveHighScore('space_shooter', 1200);
         expect(lowerScore).toBe(false);
-        expect(StorageEngine.getHighScore('platformer')).toBe(1500);
+        expect(StorageEngine.getHighScore('space_shooter')).toBe(1500);
 
         // Higher score should overwrite
-        const higherScore = StorageEngine.saveHighScore('platformer', 2000);
+        const higherScore = StorageEngine.saveHighScore('space_shooter', 2000);
         expect(higherScore).toBe(true);
-        expect(StorageEngine.getHighScore('platformer')).toBe(2000);
+        expect(StorageEngine.getHighScore('space_shooter')).toBe(2000);
     });
 
     test('should export and import profile data correctly', () => {
