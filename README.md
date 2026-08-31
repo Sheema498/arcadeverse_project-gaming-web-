@@ -1,6 +1,6 @@
 # ArcadeVerse - Retro Gaming Hub
 
-ArcadeVerse is an interactive, zero-dependency, frontend-only retro arcade terminal housing 6 customized web games built on a lightweight 2D Entity-Component-System (ECS) engine. The audio synthesizer maps directly to the browser Web Audio API to create procedurally synthesized sounds and looping chiptune soundtracks. All game settings, statistics, high scores, and achievement check marks are saved locally in the browser's `localStorage` (no backend required).
+ArcadeVerse is an interactive, zero-dependency, frontend-only retro arcade terminal housing 4 customized web games built on a lightweight 2D Entity-Component-System (ECS) engine. The audio synthesizer maps directly to the browser Web Audio API to create procedurally synthesized sounds and looping chiptune soundtracks. All game settings, statistics, high scores, and achievement check marks are saved locally in the browser's `localStorage` (no backend required).
 
 ---
 
@@ -10,10 +10,8 @@ ArcadeVerse is an interactive, zero-dependency, frontend-only retro arcade termi
 2. **Web Audio Synthesizer** (`assets/js/core/sound.js`): Envelopes, white noise filter decays, chiptune note frequencies sequencer patterns, and global mute controllers.
 3. **Storage Logic** (`assets/js/core/storage.js`): XP level boundaries, stats keepers, global board mockups, and AI simulated player score updates.
 4. **Games Suite** (`assets/js/games/`): 
-   *   🛡️ **Retro Knight** - 2D sidescrolling platformer with brick maps and slimes.
    *   📡 **Neo-Defender** - Base grid strategy tower defense with firing turrets.
    *   🚀 **Cosmic Void** - Scrolling space shooter with bullet-hell modules and bosses.
-   *   🗺️ **Dungeon Quest** - Top-down RPG with quest branches and sword shops.
    *   🏎️ **Synth Racer** - Pseudo-3D road racer with scaling sprites curves.
    *   🧱 **Block Cascade** - Blocks matching falling rows puzzle with combo multipliers.
 
