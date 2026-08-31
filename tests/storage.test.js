@@ -61,4 +61,64 @@ describe('Storage Engine and Achievements System', () => {
         expect(higherScore).toBe(true);
         expect(StorageEngine.getHighScore('space_shooter')).toBe(2000);
     });
+
+    test('should export and import profile data correctly', () => {
+        // Setup custom profile state
+        const originalProfile = StorageEngine.getProfile();
+        originalProfile.username = 'ExportTester';
+        originalProfile.xp = 1000;
+        StorageEngine.saveProfile(originalProfile);
+        StorageEngine.unlockAchievement('plat_first_step');
+
+        const exported = StorageEngine.exportProfileData();
+        expect(exported).toContain('ExportTester');
+        expect(exported).toContain('plat_first_step');
+
+        // Clear data
+        localStorage.clear();
+
+        // Import the data back
+        const importSuccess = StorageEngine.importProfileData(exported);
+        expect(importSuccess).toBe(true);
+
+        const importedProfile = StorageEngine.getProfile();
+        expect(importedProfile.username).toBe('ExportTester');
+        expect(importedProfile.xp).toBe(1050);
+        expect(StorageEngine.isAchievementUnlocked('plat_first_step')).toBe(true);
+    });
+
+    test('should reject invalid import profile data', () => {
+        const importSuccess = StorageEngine.importProfileData('invalid-json');
+        expect(importSuccess).toBe(false);
+
+        const importSuccessEmpty = StorageEngine.importProfileData('{}');
+        expect(importSuccessEmpty).toBe(false);
+    test('should reset a single game high score correctly', () => {
+        StorageEngine.saveHighScore('platformer', 3000);
+        expect(StorageEngine.getHighScore('platformer')).toBe(3000);
+
+        const resetSuccess = StorageEngine.resetHighScore('platformer');
+        expect(resetSuccess).toBe(true);
+        expect(StorageEngine.getHighScore('platformer')).toBe(0);
+
+        const resetSuccessInvalid = StorageEngine.resetHighScore('nonexistent_game');
+        expect(resetSuccessInvalid).toBe(false);
+    });
+
+    test('should reset achievements correctly', () => {
+        StorageEngine.unlockAchievement('plat_first_step');
+        expect(StorageEngine.isAchievementUnlocked('plat_first_step')).toBe(true);
+
+        StorageEngine.resetAchievements();
+        expect(StorageEngine.isAchievementUnlocked('plat_first_step')).toBe(false);
+    });
+
+    test('should safely reset data without touching non-prefixed keys', () => {
+        localStorage.setItem('other_app_key', 'should_remain');
+        StorageEngine.saveHighScore('platformer', 1000);
+
+        StorageEngine.resetAllData();
+        expect(localStorage.getItem('other_app_key')).toBe('should_remain');
+        expect(StorageEngine.getHighScore('platformer')).toBe(0);
+    });
 });
