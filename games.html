@@ -49,14 +49,7 @@
             <aside class="games-sidebar">
                 <h3 class="sidebar-title">Games Selector</h3>
                 <ul class="games-selector-list" id="gamesSelectorList">
-                    <li class="selector-item" data-game="platformer">
-                        <span class="selector-icon">🛡️</span>
-                        <div class="selector-details">
-                            <span class="selector-name">Retro Knight</span>
-                            <span class="selector-type">Platformer</span>
-                        </div>
-                    </li>
-                    <li class="selector-item" data-game="tower_defense">
+                    <li class="selector-item active" data-game="tower_defense">
                         <span class="selector-icon">📡</span>
                         <div class="selector-details">
                             <span class="selector-name">Neo-Defender</span>
@@ -68,13 +61,6 @@
                         <div class="selector-details">
                             <span class="selector-name">Cosmic Void</span>
                             <span class="selector-type">Shoot 'Em Up</span>
-                        </div>
-                    </li>
-                    <li class="selector-item" data-game="rpg">
-                        <span class="selector-icon">🗺️</span>
-                        <div class="selector-details">
-                            <span class="selector-name">Dungeon Quest</span>
-                            <span class="selector-type">Action RPG</span>
                         </div>
                     </li>
                     <li class="selector-item" data-game="racer">
@@ -98,8 +84,8 @@
             <section class="game-main-panel">
                 <div class="game-header-bar">
                     <div class="active-game-meta">
-                        <span class="game-badge" id="activeGameGenre">Platformer</span>
-                        <h2 id="activeGameTitle">Retro Knight</h2>
+                        <span class="game-badge" id="activeGameGenre">Strategy</span>
+                        <h2 id="activeGameTitle">Neo-Defender</h2>
                     </div>
                     <div class="game-action-controls">
                         <button class="btn btn-sm btn-secondary" id="btnRestartGame">🔄 Restart</button>
@@ -115,8 +101,8 @@
                     <!-- Overlay Screen for Start/Pause/Game Over -->
                     <div class="canvas-overlay" id="canvasOverlay">
                         <div class="overlay-content" id="overlayContent">
-                            <h2 class="overlay-title" id="overlayTitle">RETRO KNIGHT</h2>
-                            <p class="overlay-desc" id="overlayDesc">Press Start to enter the level.</p>
+                            <h2 class="overlay-title" id="overlayTitle">NEO-DEFENDER</h2>
+                            <p class="overlay-desc" id="overlayDesc">Press Start to enter the defense grid.</p>
                             <button class="btn btn-primary btn-lg btn-glow" id="btnStartGame">START GAME</button>
                         </div>
                     </div>
@@ -132,18 +118,16 @@
                         </div>
                         <div class="tab-content-container">
                             <div class="tab-content active" id="tabContent-howToPlay">
-                                <p id="gameHowToPlay">Navigate through platforms, jump over spike hazards, and defeat slime guards to retrieve the golden emblem at the end of the level.</p>
+                                <p id="gameHowToPlay">Click anywhere outside the path segments to place defense towers. Click existing towers to upgrade them (+100 gold cost). Survive waves of bots.</p>
                             </div>
                             <div class="tab-content" id="tabContent-controls">
                                 <div class="controls-grid" id="gameControlsGrid">
-                                    <div class="control-key-row"><span class="key-cap">A</span> / <span class="key-cap">D</span> or <span class="key-cap">←</span> / <span class="key-cap">→</span> <span>Move Left / Right</span></div>
-                                    <div class="control-key-row"><span class="key-cap">Space</span> / <span class="key-cap">W</span> <span>Jump (Double Jump unlocked via scrolls)</span></div>
-                                    <div class="control-key-row"><span class="key-cap">Shift</span> <span>Dash (when gauge is full)</span></div>
-                                    <div class="control-key-row"><span class="key-cap">J</span> <span>Attack / Cast Magic</span></div>
+                                    <div class="control-key-row"><span>Mouse Left Click</span> <span>Place / Upgrade Towers</span></div>
+                                    <div class="control-key-row"><span>Sidebar Option</span> <span>Toggle between Turret Types</span></div>
                                 </div>
                             </div>
                             <div class="tab-content" id="tabContent-lore">
-                                <p id="gameLore">Sir Galen must descend into the Pixel Caves of Antigravity to retrieve the long lost Golden Code fragments before the corruption dissolves the virtual realm.</p>
+                                <p id="gameLore">Protect the central processor mainframe from corruption mechanical units.</p>
                             </div>
                         </div>
                     </div>

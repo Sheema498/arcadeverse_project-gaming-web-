@@ -4,18 +4,8 @@
 
 const STORAGE_KEY_PREFIX = 'arcadeverse_';
 
-// Define the comprehensive achievements database (48 total, 8 per game)
+// Define the comprehensive achievements database (32 total, 8 per game)
 const ACHIEVEMENT_DATABASE = [
-    // --- Retro Knight (Platformer) ---
-    { id: 'plat_first_step', title: 'First Token', desc: 'Take your first step in Retro Knight.', game: 'platformer', points: 10 },
-    { id: 'plat_coin_10', title: 'Hoarder Cadet', desc: 'Collect 10 coins in a single run.', game: 'platformer', points: 15 },
-    { id: 'plat_coin_50', title: 'Gold Rush', desc: 'Collect 50 coins in a single run.', game: 'platformer', points: 25 },
-    { id: 'plat_kill_1', title: 'Bug Squasher', desc: 'Defeat an enemy creature.', game: 'platformer', points: 10 },
-    { id: 'plat_kill_10', title: 'Vanquisher', desc: 'Defeat 10 enemies in a single run.', game: 'platformer', points: 20 },
-    { id: 'plat_clear_1', title: 'Level 1 Complete', desc: 'Clear the first zone successfully.', game: 'platformer', points: 20 },
-    { id: 'plat_clear_all', title: 'Savior of Code', desc: 'Clear all platformer levels.', game: 'platformer', points: 50 },
-    { id: 'plat_no_death', title: 'Perfect Shield', desc: 'Clear any level without taking damage.', game: 'platformer', points: 40 },
-
     // --- Neo-Defender (Tower Defense) ---
     { id: 'td_first_tower', title: 'Base Command', desc: 'Construct your first defensive turret.', game: 'tower_defense', points: 10 },
     { id: 'td_wave_5', title: 'Hold the Line', desc: 'Survive wave 5 on any map.', game: 'tower_defense', points: 15 },
@@ -35,16 +25,6 @@ const ACHIEVEMENT_DATABASE = [
     { id: 'space_max_power', title: 'Full Arsenal', desc: 'Reach maximum weapon power level.', game: 'space_shooter', points: 20 },
     { id: 'space_graze', title: 'Danger Zone', desc: 'Dodge 50 bullets within close margins.', game: 'space_shooter', points: 25 },
     { id: 'space_pacifist', title: 'Pacifist Pilot', desc: 'Survive 30 seconds without firing a bullet.', game: 'space_shooter', points: 40 },
-
-    // --- Dungeon Quest (RPG) ---
-    { id: 'rpg_first_quest', title: 'Initiate', desc: 'Complete your first NPC quest.', game: 'rpg', points: 10 },
-    { id: 'rpg_all_quests', title: 'Hero of the Realm', desc: 'Complete all 5 core NPC quests.', game: 'rpg', points: 40 },
-    { id: 'rpg_loot_chest', title: 'Treasure Hunter', desc: 'Open your first loot chest.', game: 'rpg', points: 10 },
-    { id: 'rpg_max_gear', title: 'Dressed to Kill', desc: 'Equip Mythic Sword and Dragon Armor.', game: 'rpg', points: 30 },
-    { id: 'rpg_level_10', title: 'RPG Veteran', desc: 'Reach player level 10 inside Dungeon Quest.', game: 'rpg', points: 25 },
-    { id: 'rpg_kill_slime', title: 'Slime Slayer', desc: 'Defeat 20 slimes.', game: 'rpg', points: 15 },
-    { id: 'rpg_kill_dragon', title: 'Wyrm Slayer', desc: 'Defeat the Red Dragon boss.', game: 'rpg', points: 50 },
-    { id: 'rpg_buy_item', title: 'Merchant Friend', desc: 'Buy an item from the merchant shop.', game: 'rpg', points: 15 },
 
     // --- Synth Racer (Pseudo-3D Racer) ---
     { id: 'race_first_lap', title: 'Tread Marks', desc: 'Complete your first highway lap.', game: 'racer', points: 10 },
@@ -102,10 +82,8 @@ const StorageEngine = {
             gamesPlayed: 0,
             cumulativeScore: 0,
             stats: {
-                platformer: { highScore: 0, coinsCollected: 0, enemiesDefeated: 0, deaths: 0 },
                 tower_defense: { highScore: 0, maxWave: 0, towersBuilt: 0, enemiesDestroyed: 0 },
                 space_shooter: { highScore: 0, bossesDefeated: 0, shotsFired: 0 },
-                rpg: { highScore: 0, questsCompleted: 0, chestsOpened: 0, monstersSlain: 0, bestSword: 'Bronze' },
                 racer: { highScore: 0, bestLapTime: null, maxSpeed: 0, collisions: 0 },
                 puzzle: { highScore: 0, linesCleared: 0, tetrisesCleared: 0, maxCombo: 0 }
             }
@@ -162,7 +140,7 @@ const StorageEngine = {
         const profile = this.getProfile();
         profile.gamesPlayed++;
         this.saveProfile(profile);
-        this.unlockAchievement('plat_first_step'); // simple hook for first launch
+        this.unlockAchievement('td_first_tower'); // simple hook for first launch
     },
 
     // --- High Scores ---
@@ -249,14 +227,12 @@ const StorageEngine = {
         botNames.forEach((name, index) => {
             const level = Math.floor(Math.random() * 20) + 1;
             const stats = {
-                platformer: Math.floor(Math.random() * 4000) + 100,
                 tower_defense: Math.floor(Math.random() * 2500) + 50,
                 space_shooter: Math.floor(Math.random() * 8000) + 200,
-                rpg: Math.floor(Math.random() * 5000) + 150,
                 racer: Math.floor(Math.random() * 3000) + 100,
                 puzzle: Math.floor(Math.random() * 45000) + 500
             };
-            const cumulativeScore = stats.platformer + stats.tower_defense + stats.space_shooter + stats.rpg + stats.racer + stats.puzzle;
+            const cumulativeScore = stats.tower_defense + stats.space_shooter + stats.racer + stats.puzzle;
 
             leaderboard.push({
                 username: name,
@@ -281,10 +257,8 @@ const StorageEngine = {
             level: profile.level,
             cumulativeScore: profile.cumulativeScore,
             stats: {
-                platformer: profile.stats.platformer.highScore,
                 tower_defense: profile.stats.tower_defense.highScore,
                 space_shooter: profile.stats.space_shooter.highScore,
-                rpg: profile.stats.rpg.highScore,
                 racer: profile.stats.racer.highScore,
                 puzzle: profile.stats.puzzle.highScore
             },
@@ -328,7 +302,7 @@ const StorageEngine = {
         const profile = this.getProfile();
         if (bot.username === profile.username) return;
 
-        const games = ['platformer', 'tower_defense', 'space_shooter', 'rpg', 'racer', 'puzzle'];
+        const games = ['tower_defense', 'space_shooter', 'racer', 'puzzle'];
         const gameId = games[Math.floor(Math.random() * games.length)];
         
         // Add random amount to score
