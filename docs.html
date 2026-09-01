@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="cyberpunk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <header class="navbar">
@@ -31,11 +33,9 @@
                         <span class="theme-icon">⚡</span>
                     </button>
                     <div class="theme-dropdown" id="themeDropdown">
-                        <button class="theme-opt" data-theme="cyberpunk">Cyberpunk</button>
-                        <button class="theme-opt" data-theme="retro">Retro Terminal</button>
-                        <button class="theme-opt" data-theme="synthwave">Synthwave</button>
-                        <button class="theme-opt" data-theme="dark">Midnight Dark</button>
-                        <button class="theme-opt" data-theme="light">Arcade Light</button>
+                        <button class="theme-opt" data-theme="light">Pink Light</button>
+                        <button class="theme-opt" data-theme="dark">Dark</button>
+                        <button class="theme-opt" data-theme="red">Black & Red</button>
                     </div>
                 </div>
             </nav>
@@ -46,7 +46,8 @@
     <main class="dashboard-container">
         <div class="section-title-row">
             <h2>Engine Manual & Technical Reference</h2>
-            <p>Explore the architecture, equations, and structures behind the custom 2D Canvas Engine and Audio Synthesizer.</p>
+            <p>Explore the architecture, equations, and structures behind the custom 2D Canvas Engine and Audio
+                Synthesizer.</p>
         </div>
 
         <div class="dashboard-grid">
@@ -76,24 +77,38 @@
                         <!-- Section: Introduction -->
                         <div class="docs-section active" id="sec-intro">
                             <h2>1. Introduction to ArcadeVerse</h2>
-                            <p>ArcadeVerse is an advanced retro-gaming portal designed to operate entirely within the user's browser. It features zero dependencies, zero external images or audio files, and runs at a constant 60 FPS utilizing HTML5 Canvas and the Web Audio API.</p>
-                            <p>Every sprite, animation frame, sound effect, and background music score is calculated procedurally in JavaScript at runtime. The portal represents a self-contained gaming system built on a custom Entity-Component-System (ECS) engine framework.</p>
+                            <p>ArcadeVerse is an advanced retro-gaming portal designed to operate entirely within the
+                                user's browser. It features zero dependencies, zero external images or audio files, and
+                                runs at a constant 60 FPS utilizing HTML5 Canvas and the Web Audio API.</p>
+                            <p>Every sprite, animation frame, sound effect, and background music score is calculated
+                                procedurally in JavaScript at runtime. The portal represents a self-contained gaming
+                                system built on a custom Entity-Component-System (ECS) engine framework.</p>
                             <div class="alert alert-info">
-                                <strong>System Note:</strong> All game states, high scores, achievements, and custom player profiles are persisted client-side in <code>localStorage</code>.
+                                <strong>System Note:</strong> All game states, high scores, achievements, and custom
+                                player profiles are persisted client-side in <code>localStorage</code>.
                             </div>
                         </div>
 
                         <!-- Section: ECS Game Engine -->
                         <div class="docs-section" id="sec-engine">
                             <h2>2. 2D Entity-Component-System (ECS)</h2>
-                            <p>The core engine (<code>engine.js</code>) employs a lightweight, high-performance Entity-Component-System design pattern. This decouples data from logic, facilitating modular expansion.</p>
+                            <p>The core engine (<code>engine.js</code>) employs a lightweight, high-performance
+                                Entity-Component-System design pattern. This decouples data from logic, facilitating
+                                modular expansion.</p>
                             <ul>
-                                <li><strong>Entity:</strong> A unique numeric identifier representing an object in the world.</li>
-                                <li><strong>Component:</strong> Plain structures carrying state data (e.g. <code>Transform</code>, <code>Velocity</code>, <code>Sprite</code>, <code>Collider</code>).</li>
-                                <li><strong>System:</strong> Logic processors that iterate over entities matching specific component masks (e.g. <code>PhysicsSystem</code>, <code>RenderSystem</code>).</li>
+                                <li><strong>Entity:</strong> A unique numeric identifier representing an object in the
+                                    world.</li>
+                                <li><strong>Component:</strong> Plain structures carrying state data (e.g.
+                                    <code>Transform</code>, <code>Velocity</code>, <code>Sprite</code>,
+                                    <code>Collider</code>).</li>
+                                <li><strong>System:</strong> Logic processors that iterate over entities matching
+                                    specific component masks (e.g. <code>PhysicsSystem</code>,
+                                    <code>RenderSystem</code>).</li>
                             </ul>
                             <h3>Core Game Loop</h3>
-                            <p>The loop employs a fixed timestep update with a variable rendering interpolator to prevent physics tunneling and guarantee deterministic calculations across different monitor refresh rates.</p>
+                            <p>The loop employs a fixed timestep update with a variable rendering interpolator to
+                                prevent physics tunneling and guarantee deterministic calculations across different
+                                monitor refresh rates.</p>
                             <pre><code>// Pseudocode of the timestep loop
 let lastTime = performance.now();
 let accumulator = 0.0;
@@ -118,57 +133,76 @@ function loop(time) {
                         <!-- Section: Physics and Collisions -->
                         <div class="docs-section" id="sec-physics">
                             <h2>3. Physics & Bounding Box Collisions</h2>
-                            <p>The engine resolves static and dynamic collisions through Axis-Aligned Bounding Box (AABB) projections and Circle-to-AABB intersection resolutions.</p>
+                            <p>The engine resolves static and dynamic collisions through Axis-Aligned Bounding Box
+                                (AABB) projections and Circle-to-AABB intersection resolutions.</p>
                             <h3>AABB Intersection Equation</h3>
-                            <p>For two bounding boxes \(A\) and \(B\), defined by their min/max coordinate vectors, an intersection occurs if and only if:</p>
+                            <p>For two bounding boxes \(A\) and \(B\), defined by their min/max coordinate vectors, an
+                                intersection occurs if and only if:</p>
                             \[
-                            (A_{min.x} \le B_{max.x} \land A_{max.x} \ge B_{min.x}) \land (A_{min.y} \le B_{max.y} \land A_{max.y} \ge B_{min.y})
+                            (A_{min.x} \le B_{max.x} \land A_{max.x} \ge B_{min.x}) \land (A_{min.y} \le B_{max.y} \land
+                            A_{max.y} \ge B_{min.y})
                             \]
                             <h3>Resolution</h3>
-                            <p>When an intersection is detected, the overlap vector is computed along both axes. The entity is projected back along the axis of minimum penetration, and its velocity along that axis is set to zero or multiplied by a coefficient of restitution (bounciness).</p>
+                            <p>When an intersection is detected, the overlap vector is computed along both axes. The
+                                entity is projected back along the axis of minimum penetration, and its velocity along
+                                that axis is set to zero or multiplied by a coefficient of restitution (bounciness).</p>
                         </div>
 
                         <!-- Section: Audio Synthesizer -->
                         <div class="docs-section" id="sec-audio">
                             <h2>4. Audio Synthesis via Web Audio API</h2>
-                            <p>ArcadeVerse has no static audio assets. Sound effects are synthesized on-demand, and backing tracks are played via custom code scheduler nodes.</p>
+                            <p>ArcadeVerse has no static audio assets. Sound effects are synthesized on-demand, and
+                                backing tracks are played via custom code scheduler nodes.</p>
                             <h3>Additive & Subtractive Synthesizer Diagram</h3>
                             <pre><code>[OscillatorNode] --\
                      --> [BiquadFilterNode] --> [GainNode] --> [AudioDestination]
 [NoiseBuffer]   --/</code></pre>
                             <h3>Custom Synthesizer Settings</h3>
-                            <p>The sound library employs envelopes to adjust frequency and gain parameters over time. An ADSR (Attack, Decay, Sustain, Release) envelope is used to sculpt sounds:</p>
+                            <p>The sound library employs envelopes to adjust frequency and gain parameters over time. An
+                                ADSR (Attack, Decay, Sustain, Release) envelope is used to sculpt sounds:</p>
                             <ul>
-                                <li><strong>Laser:</strong> Expontential pitch sweep down from 1200 Hz to 200 Hz over 0.15s, using a sawtooth wave.</li>
-                                <li><strong>Explosion:</strong> Bandpass filtered white noise buffer modulated with an exponential amplitude decay.</li>
-                                <li><strong>Coin:</strong> Quick double-tone pitch shift (e.g. 987 Hz to 1318 Hz) using sine waves to generate a bright chiptune ring.</li>
+                                <li><strong>Laser:</strong> Expontential pitch sweep down from 1200 Hz to 200 Hz over
+                                    0.15s, using a sawtooth wave.</li>
+                                <li><strong>Explosion:</strong> Bandpass filtered white noise buffer modulated with an
+                                    exponential amplitude decay.</li>
+                                <li><strong>Coin:</strong> Quick double-tone pitch shift (e.g. 987 Hz to 1318 Hz) using
+                                    sine waves to generate a bright chiptune ring.</li>
                             </ul>
                         </div>
 
                         <!-- Section: Pseudo-3D Projection -->
                         <div class="docs-section" id="sec-pseudo3d">
                             <h2>5. Pseudo-3D Racer Road Projection</h2>
-                            <p>The Synth Racer game generates curved highways and hills using a classic pseudo-3D perspective projection technique similar to classic arcade cabinets.</p>
+                            <p>The Synth Racer game generates curved highways and hills using a classic pseudo-3D
+                                perspective projection technique similar to classic arcade cabinets.</p>
                             <h3>Projective Transformation</h3>
-                            <p>Points along the road curve are represented in 3D world space \((x, y, z)\) and projected onto the 2D screen coordinate space \((X, Y)\) using the equations:</p>
+                            <p>Points along the road curve are represented in 3D world space \((x, y, z)\) and projected
+                                onto the 2D screen coordinate space \((X, Y)\) using the equations:</p>
                             \[
                             X = \frac{Width}{2} + \frac{x - Camera_x}{z - Camera_z} \times Focus
                             \]
                             \[
                             Y = \frac{Height}{2} - \frac{y - Camera_y}{z - Camera_z} \times Focus
                             \]
-                            <p>Where <code>Focus</code> is the screen projection distance. Scenery sprites are rendered with a scale factor \(S\) proportional to distance: \(S = \frac{Focus}{z - Camera_z}\).</p>
+                            <p>Where <code>Focus</code> is the screen projection distance. Scenery sprites are rendered
+                                with a scale factor \(S\) proportional to distance: \(S = \frac{Focus}{z - Camera_z}\).
+                            </p>
                         </div>
 
                         <!-- Section: Procedural Data Systems -->
                         <div class="docs-section" id="sec-database">
                             <h2>6. Procedural Data Systems & Structures</h2>
-                            <p>To establish a rich, responsive arcade experience, ArcadeVerse features deep data matrices and procedural math generators, including:</p>
+                            <p>To establish a rich, responsive arcade experience, ArcadeVerse features deep data
+                                matrices and procedural math generators, including:</p>
                             <ul>
-                                <li><strong>Wave Formation Logic:</strong> Mathematical curves defining enemy swarm trajectories, hitpoints, and speed scaling over time in Cosmic Void.</li>
-                                <li><strong>Defense Waypoint Grids:</strong> Navigational grid nodes directing invading squad paths and coordinate raycasting for defensive turrets in Neo-Defender.</li>
-                                <li><strong>Pseudo-3D Track Segments:</strong> Road elevation curves and curvature tables generating infinite procedural highway hills in Synth Racer.</li>
-                                <li><strong>Block Matrix Rotator:</strong> Matrix transposition algorithms managing piece states, wall-kick resolutions, and cascade multipliers in Block Cascade.</li>
+                                <li><strong>Wave Formation Logic:</strong> Mathematical curves defining enemy swarm
+                                    trajectories, hitpoints, and speed scaling over time in Cosmic Void.</li>
+                                <li><strong>Defense Waypoint Grids:</strong> Navigational grid nodes directing invading
+                                    squad paths and coordinate raycasting for defensive turrets in Neo-Defender.</li>
+                                <li><strong>Pseudo-3D Track Segments:</strong> Road elevation curves and curvature
+                                    tables generating infinite procedural highway hills in Synth Racer.</li>
+                                <li><strong>Block Matrix Rotator:</strong> Matrix transposition algorithms managing
+                                    piece states, wall-kick resolutions, and cascade multipliers in Block Cascade.</li>
                             </ul>
                         </div>
                     </div>
@@ -225,4 +259,5 @@ function loop(time) {
     <script src="assets/js/core/sound.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>
