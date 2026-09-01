@@ -5,11 +5,11 @@
 /* --- Hero Banner Section --- */
 .hero-banner {
     background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     padding: 2.5rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,14 +20,7 @@
 }
 
 .hero-banner::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 80% 50%, rgba(0, 255, 255, 0.08) 0%, transparent 60%);
-    pointer-events: none;
+    display: none;
 }
 
 .hero-content {
@@ -36,18 +29,23 @@
 }
 
 .hero-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    letter-spacing: 3px;
+    font-size: 2.35rem;
+    font-weight: 750;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
     margin-bottom: 0.75rem;
-    text-transform: uppercase;
+    text-transform: none;
+    text-shadow: none;
+    animation: none !important;
 }
 
 .hero-subtitle {
     color: var(--color-text-muted);
-    font-size: 1.05rem;
+    font-size: 1rem;
+    line-height: 1.6;
     margin-bottom: 1.5rem;
     max-width: 600px;
+    letter-spacing: normal;
 }
 
 .hero-actions {
@@ -76,13 +74,13 @@
     font-size: 1.6rem;
     font-weight: 800;
     color: var(--color-primary);
-    text-shadow: 0 0 5px var(--color-primary-glow);
+    text-shadow: none;
 }
 
 .qs-lbl {
     font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    text-transform: none;
+    letter-spacing: normal;
     color: var(--color-text-muted);
     margin-top: 0.25rem;
 }
@@ -93,14 +91,14 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    border-bottom: 2px solid var(--color-surface-alt);
+    border-bottom: 1px solid var(--color-border);
     padding-bottom: 0.5rem;
 }
 
 .section-title-row h2 {
     font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    text-transform: none;
+    letter-spacing: normal;
     color: var(--color-primary);
 }
 
@@ -128,7 +126,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 10px var(--color-primary-glow);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     overflow: hidden;
 }
 
@@ -144,16 +142,16 @@
 .profile-details h4 {
     font-size: 1.25rem;
     margin-bottom: 0.25rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    text-transform: none;
+    letter-spacing: normal;
 }
 
 .profile-rank {
     font-size: 0.8rem;
     font-weight: 700;
     color: var(--color-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-transform: none;
+    letter-spacing: normal;
     margin-bottom: 0.75rem;
 }
 
@@ -219,8 +217,8 @@
 
 .ach-info h5 {
     font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-transform: none;
+    letter-spacing: normal;
     margin-bottom: 0.15rem;
     color: var(--color-text);
 }
@@ -277,7 +275,7 @@
     left: 8px;
     font-size: 0.65rem;
     font-weight: 800;
-    text-transform: uppercase;
+    text-transform: none;
     background-color: rgba(0,0,0,0.7);
     padding: 0.2rem 0.4rem;
     border-radius: 2px;
@@ -294,8 +292,8 @@
 .game-info h3 {
     font-size: 1.15rem;
     margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-transform: none;
+    letter-spacing: normal;
 }
 
 .game-info p {
@@ -361,9 +359,9 @@
     font-family: inherit;
     font-weight: 700;
     font-size: 0.75rem;
-    text-transform: uppercase;
+    text-transform: none;
     padding: 0.4rem 0.8rem;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     transition: var(--transition-speed);
 }
@@ -373,7 +371,7 @@
     background-color: var(--color-primary);
     color: var(--color-bg);
     border-color: var(--color-primary);
-    box-shadow: 0 0 8px var(--color-primary-glow);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
 .achievements-grid {
@@ -414,9 +412,9 @@
     border-radius: var(--border-radius);
     cursor: pointer;
     font-weight: 700;
-    text-transform: uppercase;
+    text-transform: none;
     font-size: 0.8rem;
-    letter-spacing: 0.5px;
+    letter-spacing: normal;
     background-color: var(--color-surface-alt);
     border-left: 3px solid transparent;
     transition: var(--transition-speed);
@@ -444,7 +442,7 @@
 
 .docs-section h2 {
     color: var(--color-primary);
-    text-transform: uppercase;
+    text-transform: none;
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--color-border);
     padding-bottom: 0.25rem;
@@ -496,4 +494,51 @@
         width: 100%;
         justify-content: space-between;
     }
+}
+
+
+/* ---------- Final dashboard polish ---------- */
+
+.hero-banner {
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.quick-stat {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.quick-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(0,0,0,0.10);
+}
+
+.qs-val {
+    font-weight: 750;
+    text-shadow: none;
+}
+
+.qs-lbl {
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.section-title-row h2 {
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.v-tab {
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.docs-section h2 {
+    text-transform: none;
 }

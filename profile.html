@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="cyberpunk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <header class="navbar">
@@ -31,11 +33,9 @@
                         <span class="theme-icon">⚡</span>
                     </button>
                     <div class="theme-dropdown" id="themeDropdown">
-                        <button class="theme-opt" data-theme="cyberpunk">Cyberpunk</button>
-                        <button class="theme-opt" data-theme="retro">Retro Terminal</button>
-                        <button class="theme-opt" data-theme="synthwave">Synthwave</button>
-                        <button class="theme-opt" data-theme="dark">Midnight Dark</button>
-                        <button class="theme-opt" data-theme="light">Arcade Light</button>
+                        <button class="theme-opt" data-theme="light">Pink Light</button>
+                        <button class="theme-opt" data-theme="dark">Dark</button>
+                        <button class="theme-opt" data-theme="red">Black & Red</button>
                     </div>
                 </div>
             </nav>
@@ -60,21 +60,25 @@
                         <form id="profileForm" onsubmit="event.preventDefault();">
                             <div class="form-group">
                                 <label for="inputUsername">Gamer Tag</label>
-                                <input type="text" id="inputUsername" class="form-input" value="PlayerOne" maxlength="15">
+                                <input type="text" id="inputUsername" class="form-input" value="PlayerOne"
+                                    maxlength="15">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Procedural Avatar Seed</label>
                                 <div class="avatar-generator-box">
                                     <canvas id="editorAvatarCanvas" width="128" height="128"></canvas>
                                     <div class="avatar-controls">
-                                        <button type="button" class="btn btn-sm btn-secondary" id="btnRandomizeAvatar">🎲 Randomize</button>
-                                        <button type="button" class="btn btn-sm btn-secondary" id="btnCycleAvatarColor">🎨 Color Theme</button>
+                                        <button type="button" class="btn btn-sm btn-secondary"
+                                            id="btnRandomizeAvatar">🎲 Randomize</button>
+                                        <button type="button" class="btn btn-sm btn-secondary"
+                                            id="btnCycleAvatarColor">🎨 Color Theme</button>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <button type="button" class="btn btn-primary btn-block" id="btnSaveProfile">Save Changes</button>
+
+                            <button type="button" class="btn btn-primary btn-block" id="btnSaveProfile">Save
+                                Changes</button>
                         </form>
                     </div>
                 </div>
@@ -87,13 +91,17 @@
                     <div class="card-body">
                         <div class="stat-list">
                             <div class="stat-row"><span>Total Playtime</span> <b id="statPlayTime">0m</b></div>
-                            <div class="stat-row"><span>Total Score Accumulated</span> <b id="statCumulativeScore">0</b></div>
-                            <div class="stat-row"><span>Tower Defense Waves Held</span> <b id="statTowerWaves">0</b></div>
+                            <div class="stat-row"><span>Total Score Accumulated</span> <b id="statCumulativeScore">0</b>
+                            </div>
+                            <div class="stat-row"><span>Tower Defense Waves Held</span> <b id="statTowerWaves">0</b>
+                            </div>
                             <div class="stat-row"><span>Bosses Defeated</span> <b id="statBossesDefeated">0</b></div>
                             <div class="stat-row"><span>Racer Lap Time (Best)</span> <b id="statBestLap">--s</b></div>
                             <div class="stat-row"><span>Puzzle Lines Cleared</span> <b id="statPuzzleLines">0</b></div>
                         </div>
-                        <button type="button" class="btn btn-secondary btn-block btn-sm" id="btnResetData" style="margin-top: 1rem; border-color: var(--color-error); color: var(--color-error);">⚠️ Reset Local Profile Data</button>
+                        <button type="button" class="btn btn-secondary btn-block btn-sm" id="btnResetData"
+                            style="margin-top: 1rem; border-color: var(--color-error); color: var(--color-error);">⚠️
+                            Reset Local Profile Data</button>
                     </div>
                 </div>
             </section>
@@ -172,4 +180,5 @@
     <script src="assets/js/core/sound.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="cyberpunk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/games.css">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <header class="navbar">
@@ -31,11 +33,9 @@
                         <span class="theme-icon">⚡</span>
                     </button>
                     <div class="theme-dropdown" id="themeDropdown">
-                        <button class="theme-opt" data-theme="cyberpunk">Cyberpunk</button>
-                        <button class="theme-opt" data-theme="retro">Retro Terminal</button>
-                        <button class="theme-opt" data-theme="synthwave">Synthwave</button>
-                        <button class="theme-opt" data-theme="dark">Midnight Dark</button>
-                        <button class="theme-opt" data-theme="light">Arcade Light</button>
+                        <button class="theme-opt" data-theme="light">Pink Light</button>
+                        <button class="theme-opt" data-theme="dark">Dark</button>
+                        <button class="theme-opt" data-theme="red">Black & Red</button>
                     </div>
                 </div>
             </nav>
@@ -97,7 +97,7 @@
                 <!-- Canvas Wrapper -->
                 <div class="canvas-wrapper">
                     <canvas id="gameCanvas" width="800" height="600"></canvas>
-                    
+
                     <!-- Overlay Screen for Start/Pause/Game Over -->
                     <div class="canvas-overlay" id="canvasOverlay">
                         <div class="overlay-content" id="overlayContent">
@@ -118,16 +118,20 @@
                         </div>
                         <div class="tab-content-container">
                             <div class="tab-content active" id="tabContent-howToPlay">
-                                <p id="gameHowToPlay">Click anywhere outside the path segments to place defense towers. Click existing towers to upgrade them (+100 gold cost). Survive waves of bots.</p>
+                                <p id="gameHowToPlay">Click anywhere outside the path segments to place defense towers.
+                                    Click existing towers to upgrade them (+100 gold cost). Survive waves of bots.</p>
                             </div>
                             <div class="tab-content" id="tabContent-controls">
                                 <div class="controls-grid" id="gameControlsGrid">
-                                    <div class="control-key-row"><span>Mouse Left Click</span> <span>Place / Upgrade Towers</span></div>
-                                    <div class="control-key-row"><span>Sidebar Option</span> <span>Toggle between Turret Types</span></div>
+                                    <div class="control-key-row"><span>Mouse Left Click</span> <span>Place / Upgrade
+                                            Towers</span></div>
+                                    <div class="control-key-row"><span>Sidebar Option</span> <span>Toggle between Turret
+                                            Types</span></div>
                                 </div>
                             </div>
                             <div class="tab-content" id="tabContent-lore">
-                                <p id="gameLore">Protect the central processor mainframe from corruption mechanical units.</p>
+                                <p id="gameLore">Protect the central processor mainframe from corruption mechanical
+                                    units.</p>
                             </div>
                         </div>
                     </div>
@@ -183,7 +187,7 @@
     <script src="assets/js/core/storage.js"></script>
     <script src="assets/js/core/sound.js"></script>
     <script src="assets/js/core/engine.js"></script>
-    
+
     <!-- Games Implementation Scripts -->
     <script src="assets/js/games/platformer.js"></script>
     <script src="assets/js/games/tower_defense.js"></script>
@@ -191,8 +195,9 @@
     <script src="assets/js/games/rpg.js"></script>
     <script src="assets/js/games/racer.js"></script>
     <script src="assets/js/games/puzzle.js"></script>
-    
+
     <!-- App Controller -->
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>

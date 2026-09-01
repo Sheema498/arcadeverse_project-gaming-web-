@@ -5,15 +5,15 @@
 /* --- Cards --- */
 .card {
     background-color: var(--color-surface);
-    border: 2px solid var(--color-border);
+    border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     margin-bottom: 1.5rem;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 .card:hover {
-    box-shadow: 0 4px 20px var(--color-border-glow);
+    box-shadow: 0 5px 14px rgba(0,0,0,0.10);
 }
 
 .card-header {
@@ -26,8 +26,8 @@
 
 .card-header h3 {
     font-size: 1.15rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    text-transform: none;
+    letter-spacing: normal;
     color: var(--color-primary);
 }
 
@@ -41,12 +41,12 @@
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+    text-transform: none;
+    letter-spacing: normal;
     font-size: 0.85rem;
     padding: 0.65rem 1.25rem;
     border-radius: var(--border-radius);
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     cursor: pointer;
     transition: all var(--transition-speed) ease;
     font-family: inherit;
@@ -61,7 +61,7 @@
 .btn-primary:hover {
     background-color: transparent;
     color: var(--color-primary);
-    box-shadow: 0 0 12px var(--color-primary);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.10);
 }
 
 .btn-secondary {
@@ -73,17 +73,17 @@
 .btn-secondary:hover {
     background-color: var(--color-border);
     color: var(--color-bg);
-    box-shadow: 0 0 12px var(--color-border-glow);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 .btn-glow {
-    box-shadow: 0 0 15px var(--color-primary-glow);
+    box-shadow: none;
 }
 
 .btn-sm {
     padding: 0.4rem 0.85rem;
     font-size: 0.75rem;
-    letter-spacing: 1px;
+    letter-spacing: normal;
 }
 
 .btn-lg {
@@ -111,8 +111,8 @@
     font-weight: 700;
     margin-bottom: 0.5rem;
     font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    text-transform: none;
+    letter-spacing: normal;
     color: var(--color-text-muted);
 }
 
@@ -131,7 +131,7 @@
 
 .form-input:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 8px var(--color-primary-glow);
+    box-shadow: 0 0 0 3px var(--color-primary-glow);
 }
 
 /* --- Tables --- */
@@ -155,8 +155,8 @@
 
 .table th {
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    text-transform: none;
+    letter-spacing: normal;
     color: var(--color-text-muted);
     border-bottom: 2px solid var(--color-border);
 }
@@ -189,9 +189,9 @@
     font-size: 0.65rem;
     font-weight: 800;
     padding: 0.15rem 0.35rem;
-    border-radius: 3px;
+    border-radius: 6px;
     margin-left: 0.5rem;
-    text-transform: uppercase;
+    text-transform: none;
     box-shadow: 0 0 5px var(--color-primary-glow);
 }
 
@@ -208,9 +208,9 @@
 .rank-title-cell {
     font-weight: 700;
     color: var(--color-accent);
-    text-transform: uppercase;
+    text-transform: none;
     font-size: 0.8rem;
-    letter-spacing: 0.5px;
+    letter-spacing: normal;
 }
 
 /* --- Alerts --- */
@@ -237,8 +237,8 @@
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
     font-weight: 700;
-    border-radius: 4px;
-    text-transform: uppercase;
+    border-radius: 8px;
+    text-transform: none;
 }
 
 .difficulty {
@@ -246,8 +246,8 @@
     font-size: 0.75rem;
     font-weight: 700;
     padding: 0.15rem 0.4rem;
-    border-radius: 3px;
-    text-transform: uppercase;
+    border-radius: 6px;
+    text-transform: none;
 }
 
 .diff-easy {
@@ -271,7 +271,7 @@
 .live-pulse {
     font-size: 0.75rem;
     font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: normal;
     color: var(--color-success);
     display: inline-flex;
     align-items: center;
@@ -285,6 +285,62 @@
     height: 8px;
     background-color: var(--color-success);
     border-radius: 50%;
-    box-shadow: 0 0 8px var(--color-success);
+    box-shadow: none;
     animation: pulse 1s infinite alternate;
+}
+
+
+/* ---------- Human-designed component refinements ---------- */
+
+.card-header h3 {
+    font-weight: 700;
+    letter-spacing: normal;
+    text-transform: none;
+}
+
+.btn {
+    font-weight: 650;
+    text-transform: none;
+    letter-spacing: normal;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+    transform: translateY(-1px);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-surface-alt);
+    color: var(--color-text);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+}
+
+.btn-glow {
+    box-shadow: none;
+}
+
+.form-group label,
+.table th {
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.table th {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.badge,
+.difficulty {
+    border-radius: 999px;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.live-pulse::before {
+    box-shadow: none;
 }
